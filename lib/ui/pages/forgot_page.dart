@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../const/app_colors.dart';
+import '../../utils/const/app_colors.dart';
 import '../customWidget/custom_text_field.dart';
 import '../customWidget/login_custom_button.dart';
 

@@ -38,6 +38,15 @@ dependencies:
   intl_phone_field: ^3.2.0
   date_time_picker: ^2.1.0
   get: ^4.6.6
+  shared_preferences:
+
+  image_picker:
+  intl:
+  circular_profile_avatar:
+  flutter_bloc:
+  equatable:
+  http:
+
 
 
   # The following adds the Cupertino Icons font to your application.

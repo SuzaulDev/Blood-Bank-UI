@@ -1,8 +1,9 @@
-import 'package:blood_bank_app/customWidget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../const/app_colors.dart';
+import '../../utils/const/app_colors.dart';
+import '../customWidget/custom_button.dart';
+
 
 class BloodGroup extends StatelessWidget {
   BloodGroup({super.key});

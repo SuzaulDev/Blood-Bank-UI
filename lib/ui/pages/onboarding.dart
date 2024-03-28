@@ -1,10 +1,8 @@
-import 'package:blood_bank_app/const/app_colors.dart';
-import 'package:blood_bank_app/intro/intro.dart';
-import 'package:blood_bank_app/pages/home_page.dart';
-import 'package:blood_bank_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../utils/const/app_colors.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});

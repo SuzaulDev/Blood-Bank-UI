@@ -1,16 +1,26 @@
-import 'package:blood_bank_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../const/app_colors.dart';
+import '../../utils/const/app_colors.dart';
 import '../customWidget/custom_text_field.dart';
 import '../customWidget/login_custom_button.dart';
-import 'forgot_page.dart';
 
-class LogInPage extends StatelessWidget {
-  LogInPage({super.key});
+class RegisterPage extends StatefulWidget {
+  RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  bool isChecked = false;
+
+  final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -19,7 +29,7 @@ class LogInPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Log In',
+          'Register',
           style: GoogleFonts.poppins(),
         ),
       ),
@@ -29,12 +39,12 @@ class LogInPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
-              autovalidateMode: AutovalidateMode.always,
+              //autovalidateMode: AutovalidateMode.always,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   login_customButton(
-                      imageUrl: "images/google.png",
+                      imageUrl: 'images/google.png',
                       backgroundColor: AppColors.redColor,
                       title: 'Log In with Goggle',
                       onPressed: () {}),
@@ -42,11 +52,10 @@ class LogInPage extends StatelessWidget {
                     height: 10.h,
                   ),
                   login_customButton(
-                    imageUrl: 'images/facebook.png',
-                    backgroundColor: AppColors.redColor,
-                    title: 'Log In with Facebook',
-                    onPressed: () {},
-                  ),
+                      imageUrl: 'images/facebook.png',
+                      backgroundColor: AppColors.redColor,
+                      title: 'Log In with Facebook',
+                      onPressed: () {}),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -73,6 +82,26 @@ class LogInPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Text('Name'),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  //customTextField('Enter your name'),
+                  customTextField(
+                    hintText: 'Enter your name',
+                    keyboardType: TextInputType.name,
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Please enter the name';
+                      } else if (val.contains(RegExp(
+                          r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$"))) {
+                        return 'enter a valid name';
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: _nameController,
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -80,6 +109,7 @@ class LogInPage extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
+                  //customTextField('Enter your email'),
                   customTextField(
                     hintText: 'Enter your email',
                     keyboardType: TextInputType.emailAddress,
@@ -102,6 +132,7 @@ class LogInPage extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
+
                   customTextField(
                       hintText: 'Enter your password',
                       keyboardType: TextInputType.emailAddress,
@@ -117,49 +148,44 @@ class LogInPage extends StatelessWidget {
                       },
                       controller: _passwordController,
                       suffixIcon: Icon(Icons.remove_red_eye_outlined)),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPage()));
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: AppColors.grayColor),
-                    ),
+                  Row(
+                    children: [
+                      Checkbox(
+                          value: isChecked,
+                          onChanged: (bool? newValue) {
+                            isChecked = newValue!;
+                          }),
+                      const Expanded(
+                          child: Text(
+                        'I accept and agree to comply with Verbivy\'s Terms and Condition and Privacy policy',
+                        style: TextStyle(fontSize: 12),
+                      ))
+                    ],
                   ),
                   login_customButton(
                     backgroundColor: AppColors.redColor,
-                    title: 'Log In',
+                    title: 'Register',
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
-                      // if (_formKey.currentState!.validate()) {
-                      //
-                      // } else {
-                      //   print('Faild');
-                      // }
+                      if (_formKey.currentState!.validate()) {
+                      } else {
+                        print('Faild');
+                      }
                     },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Don\'t have an account?'),
+                      const Text('Have an account?'),
                       TextButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => RegisterPage()));
-                            Navigator.pushNamed(context, '/registerPage');
+                            Navigator.pushNamed(context, '/loginPage');
                           },
                           child: const Text(
-                            'Register',
+                            'LogIn',
                             style: TextStyle(color: AppColors.blockColor),
                           ))
                     ],
-                  ),
+                  )
                 ],
               ),
             ),

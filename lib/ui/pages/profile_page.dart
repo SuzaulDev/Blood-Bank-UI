@@ -1,11 +1,12 @@
+import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import '';
-import '../const/app_colors.dart';
+import '../../utils/const/app_colors.dart';
 import '../customWidget/custom_button.dart';
+import 'home_page.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
@@ -175,6 +176,17 @@ class ProfilePage extends StatelessWidget {
                       }
                     },
                     text: 'Next'),
+                ElevatedButton(
+                    onPressed: (){
+                      logOut();
+                      print('Log out success');
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                            (route) => false,
+                      );
+                    },
+                    child: Text("Log out"))
               ],
             ),
           ),

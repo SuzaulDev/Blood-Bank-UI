@@ -1,12 +1,11 @@
 
-
-import 'package:blood_bank_app/pages/blood_group.dart';
-import 'package:blood_bank_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../const/app_colors.dart';
+import '../../utils/const/app_colors.dart';
+import 'home_page.dart';
+
 
 class BloodType extends StatelessWidget {
   const BloodType({super.key});
