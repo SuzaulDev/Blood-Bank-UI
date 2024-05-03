@@ -5,7 +5,8 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../utils/const/app_colors.dart';
-import '../customWidget/custom_button.dart';
+import '../customView/custom_button.dart';
+
 import 'home_page.dart';
 
 class ProfilePage extends StatelessWidget {

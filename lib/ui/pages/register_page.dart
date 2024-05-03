@@ -1,9 +1,16 @@
+import 'package:blood_bank_app/bloc/register_bloc/register_page_bloc.dart';
+import 'package:blood_bank_app/bloc/register_bloc/register_page_event.dart';
+import 'package:blood_bank_app/bloc/register_bloc/register_page_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../utils/const/app_colors.dart';
-import '../customWidget/custom_text_field.dart';
-import '../customWidget/login_custom_button.dart';
+import '../customView/custom_text_field.dart';
+import '../customView/login_custom_button.dart';
+
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({super.key});
@@ -16,9 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isChecked = false;
 
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -162,15 +167,31 @@ class _RegisterPageState extends State<RegisterPage> {
                       ))
                     ],
                   ),
-                  login_customButton(
-                    backgroundColor: AppColors.redColor,
-                    title: 'Register',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                      } else {
-                        print('Faild');
-                      }
-                    },
+                  BlocListener<RegisterPageBloc,RegisterPageState>(
+                    listener: (context, state) {
+                    if(state is RegisterSuccess){
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                            (route) => false,
+                      );
+                    }
+                  },
+                    child:login_customButton(
+                      backgroundColor: AppColors.redColor,
+                      title: 'Register',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          showDialog(context: context, builder: (context) => AlertDialog(content:Center(child: CircularProgressIndicator(),) ,),);
+                          final displayName = _nameController.text;
+                          final username = _emailController.text;
+                          final password = _passwordController.text;
+                          context.read<RegisterPageBloc>().add(RegisterOnClick(displayName: displayName,username: username,password: password));
+                        } else {
+                          print('Faild');
+                        }
+                      },
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

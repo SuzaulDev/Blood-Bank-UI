@@ -39,7 +39,7 @@ dependencies:
   date_time_picker: ^2.1.0
   get: ^4.6.6
   shared_preferences:
-
+  dropdown_button2: ^2.3.9
   image_picker:
   intl:
   circular_profile_avatar:

@@ -1,4 +1,6 @@
+import 'package:blood_bank_app/bloc/drawer_bloc/drawer_bloc.dart';
 import 'package:blood_bank_app/bloc/login_bloc/login_page_bloc.dart';
+import 'package:blood_bank_app/bloc/register_bloc/register_page_bloc.dart';
 import 'package:blood_bank_app/ui/pages/blood_group.dart';
 import 'package:blood_bank_app/ui/pages/blood_type.dart';
 import 'package:blood_bank_app/ui/pages/forgot_page.dart';
@@ -28,7 +30,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HomePageBloc(ApiService())),
-          BlocProvider(create: (context) => LoginPageBloc(apiService: ApiService()),)
+          BlocProvider(create: (context) => LoginPageBloc(apiService: ApiService()),),
+          BlocProvider(create: (context) => RegisterPageBloc(apiService: ApiService()),),
+          BlocProvider(create: (context) => DrawerBloc(),)
         ],
         child: ScreenUtilInit(
           designSize: const Size(360, 690),
