@@ -1,10 +1,11 @@
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/const/app_colors.dart';
 import '../pages/donar_registration_page.dart';
 
-Widget dashBoard(List menuItemList) {
+Widget dashBoard(List<MenuItemModel> menuItemList) {
   return GridView.builder(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
@@ -24,7 +25,7 @@ Widget dashBoard(List menuItemList) {
                 borderRadius: BorderRadius.all(Radius.circular(23))),
             child: Center(
                 child: Text(
-              menuItemList[index].toString(),
+              menuItemList[index].name.toString(),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

@@ -3,6 +3,7 @@ import 'package:blood_bank_app/bloc/drawer_bloc/drawer_event.dart';
 import 'package:blood_bank_app/bloc/drawer_bloc/drawer_state.dart';
 import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/applicationUser.dart';
 import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/menu_item_view.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/password_policy.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,9 +95,7 @@ class _HomePageState extends State<HomePage> {
                       itemCount: state.menuItemList.length,
                       itemBuilder: (context, index) => ListTile(
                         onTap: () {
-                          context
-                              .read<HomePageBloc>()
-                              .add(ShowDrawerMenuDetails(menuSerialNumber: index));
+                          context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuSerialNumber: index));
                           Navigator.pop(context);
                         },
                         title: Text(state.menuItemList[index].toString()),
@@ -174,7 +173,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
+                if(getUserTypeId()==3)Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     bloodName(
@@ -239,8 +238,12 @@ class _HomePageState extends State<HomePage> {
                     if (state is ApplicationUser) {
                       return applicationUserView();
                     }
+                    if(state is PasswordPolicy){
+                      //print(state.passwordPolicyList[0].);
+                      return PasswordPolicyView(passwordPolicyList: state.passwordPolicyList);
+                    }
                     if(state is MenuItem){
-                      return MenuItemView();
+                      return MenuItemView(menuItemList: state.menuItemList);
                     }
                     if (state is HomePageError) {
                       return Center(

@@ -1,7 +1,11 @@
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_bloc.dart';
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_event.dart';
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/utils/const/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utils/constant_value.dart';
 import '../coustom_widget/custom_menu_button.dart';
@@ -11,7 +15,8 @@ import 'custom_drop_down.dart';
 class CustomBottomSheet extends StatefulWidget {
   final bool isAction;
   final titelText;
-   const CustomBottomSheet({
+
+  const CustomBottomSheet({
     super.key,
     required bool this.isAction,
     required this.titelText,
@@ -47,7 +52,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     CupertinoIcons.clear_circled_solid,
                     color: Colors.red,
                   )),
@@ -86,7 +91,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   child: customMenuInputField(
                       hintText: "Serial No",
                       keyboardType: TextInputType.text,
-                      controller:_menuSerialNoController,
+                      controller: _menuSerialNoController,
                       isRequired: true),
                 ),
               ],
@@ -110,7 +115,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       contentPadding: EdgeInsets.zero,
                       title: Text("View"),
                       value: isView,
-                      onChanged: (newValue){
+                      onChanged: (newValue) {
                         setState(() {
                           isView = newValue!;
                         });
@@ -124,7 +129,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       contentPadding: EdgeInsets.zero,
                       title: Text("Insert"),
                       value: isInsert,
-                      onChanged: (newValue){
+                      onChanged: (newValue) {
                         setState(() {
                           isInsert = newValue!;
                         });
@@ -138,7 +143,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       contentPadding: EdgeInsets.zero,
                       title: Text("Update"),
                       value: isUpdate,
-                      onChanged:(newValue){
+                      onChanged: (newValue) {
                         setState(() {
                           isUpdate = newValue!;
                         });
@@ -152,7 +157,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       contentPadding: EdgeInsets.zero,
                       title: Text("Delete"),
                       value: isDelete,
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           isDelete = value!;
                         });
@@ -163,7 +168,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   ),
                 ],
               ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(
@@ -174,8 +179,24 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     icon: Icons.save,
                     titel: "SAVE",
                     btnColor: AppColors.redColor,
-                    onClick: (){
-                      print('ok');
+                    onClick: () {
+                      MenuItemModel menuItem = MenuItemModel();
+                      menuItem.menuType = bloodGroupType.indexOf(_menuTypeController.text);
+                      menuItem.menuTypeName = _menuTypeController.text;
+                      menuItem.name = _menuNameController.text;
+                      menuItem.banglaName = _menuBanglaNameController.text;
+                      menuItem.serialNo = int.parse(_menuSerialNoController.text);
+                      menuItem.url = _menuUrlController.text;
+                      menuItem.view = isView;
+                      menuItem.insert = isInsert;
+                      menuItem.update = isUpdate;
+                      menuItem.delete = isDelete;
+
+                      //add event ............
+                      context.read<HomePageBloc>().add(AddNewMenu(menuItem: menuItem));
+
+                      //pop bottomsheet................
+                      Navigator.pop(context);
                     },
                   ),
                 ),

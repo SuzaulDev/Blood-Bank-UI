@@ -1,3 +1,7 @@
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
+import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
+import 'package:blood_bank_app/data/services/menu_item_service.dart';
+import 'package:blood_bank_app/data/services/password_policy_service.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -8,19 +12,9 @@ import 'home_page_event.dart';
 import 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  final List<String> menuItemList = [
-    "role",
-    "user",
-    "report",
-    "role",
-    "user",
-    "report",
-    "role",
-    "user",
-  ];
   ApiService apiService;
-
-  List<UserModel> userModelList = [];
+  PasswordPolicyService policyService = PasswordPolicyService();
+  MenuItemService menuItemService = MenuItemService(apiEndPoint: "api/privet/sya/menu-item");
 
   HomePageBloc(this.apiService) : super(HomePageInitial()) {
     on<LoadHomePage>((event, emit) async {
@@ -28,20 +22,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       int userTypeId = await getUserTypeId();
       emit(HomePageLoading());
       try {
-        // Simulate loading data from a data source
-        //await Future.delayed(Duration(seconds: 2));
-        userModelList = await apiService.getData();
         emit(HomePageLoaded(
-            userModelList: userModelList,
+            userModelList:[], //await apiService.getData(),
             authToken: token,
             userTypeId: userTypeId,
-            menuItemList: menuItemList));
+            menuItemList: await menuItemService.getAllData()));
       } catch (e) {
         emit(HomePageError(e.printError.toString()));
       }
     });
 
-    on<ShowDrawerMenuDetails>((event, emit) {
+    on<ShowDrawerMenuDetails>((event, emit) async{
       switch (event.menuSerialNumber) {
         case 0:
           emit(ApplicationUser());
@@ -53,13 +44,18 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           emit(UserRoleAsign());
           break;
         case 3:
-          emit(PasswordPOlicy());
+          emit(PasswordPolicy(passwordPolicyList: await policyService.getAllData()));
           break;
         case 4:
-          emit(MenuItem());
+          emit(MenuItem(menuItemList: await menuItemService.getAllData()));
           break;
       }
     });
+    on<AddNewMenu>((event, emit) async{
+      final msg = await menuItemService.insertData(event.menuItem).
+      then((value) async =>emit(MenuItem(menuItemList: await menuItemService.getAllData())) );
+
+    } );
   }
 
   @override
@@ -67,4 +63,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     // TODO: implement close
     return super.close();
   }
+
+
+
+
+
 }

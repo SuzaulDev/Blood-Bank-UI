@@ -1,3 +1,5 @@
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_state.dart';
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomePageEvent extends Equatable{
@@ -14,12 +16,19 @@ class LoadHomePage extends HomePageEvent{
 }
 class ShowDrawerMenuDetails extends HomePageEvent{
   final menuSerialNumber;
-
   ShowDrawerMenuDetails({this.menuSerialNumber});
-
   @override
   // TODO: implement props
   List<Object?> get props => [];
+}
+
+class AddNewMenu extends HomePageEvent{
+  final  MenuItemModel menuItem;
+  AddNewMenu({required this.menuItem});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+
 
 }
 

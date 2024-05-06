@@ -1,28 +1,30 @@
 import 'dart:convert';
+import 'package:blood_bank_app/base/base_api_service.dart';
+import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../models/login_response_model.dart';
+import '../models/menu_item_response_model.dart';
 import '../models/users_models.dart';
 
 class ApiService {
   var URL = "https://jsonplaceholder.typicode.com/";
   String localUrl = "http://192.168.0.100:8080/";
-  List<UserModel> userModelList = [];
   late LogInResponseModel data ;
   late LogInResponseModel rData;
 
+
   /// This Future Funtion fatch data from Api.....
-  Future<List<UserModel>> getData() async {
-    try {
-      var url = Uri.parse(URL + USERENDPOINT);
-      var response = await http.get(url);
-      List user = json.decode(response.body);
-      userModelList = user.map((e) => UserModel.fromJson(e)).toList();
-    } catch (e) {
-      print(e.toString());
-    }
-    return userModelList;
-  }
+  // Future<List<UserModel>> getData() async {
+  //   try {
+  //     BaseApiService baseApiService = BaseApiService();
+  //     List user = await baseApiService.get(endpoint:USERENDPOINT);
+  //     return user.map((e) => UserModel.fromJson(e)).toList();
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  //   return [];
+  // }
 
   Future<LogInResponseModel> userLogin(String username, String password) async {
     try {
@@ -73,6 +75,8 @@ class ApiService {
     }
     return  rData;
   }
+
+
 }
 
 var USERENDPOINT = "users";
