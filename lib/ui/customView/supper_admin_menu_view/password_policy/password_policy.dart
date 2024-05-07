@@ -24,7 +24,9 @@ class PasswordPolicyView extends StatelessWidget {
                       icon: const Icon(
                         Icons.delete,
                         color: Colors.red,
-                      ))),
+                      ),
+                  ),
+              ),
             ),
           ],
         ),

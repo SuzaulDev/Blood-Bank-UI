@@ -1,5 +1,6 @@
 import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:equatable/equatable.dart';
+import '../../data/models/password_policy_response_model.dart';
 import '../../data/models/users_models.dart';
 
 /// **Author**: Md. Sabbir Hossain
@@ -32,9 +33,13 @@ class HomePageLoaded extends HomePageState {
 }
 
 class ApplicationUser extends HomePageState{
+  final List<PasswordPolicyModel> passwordPolicylist;
+  final  appUserList;
+  ApplicationUser({required this.passwordPolicylist,this.appUserList});
+
   @override
   // TODO: implement props
-  List<Object?> get props => [];
+  List<Object?> get props => [passwordPolicylist,appUserList];
 }
 class UserRole extends HomePageState{
   @override

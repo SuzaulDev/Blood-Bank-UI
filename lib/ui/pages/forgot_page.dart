@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/const/app_colors.dart';
-import '../customView/custom_text_field.dart';
-import '../customView/login_custom_button.dart';
+import '../coustom_widget/custom_text_field.dart';
+import '../coustom_widget/login_custom_button.dart';
 
 
 class ForgotPage extends StatelessWidget {

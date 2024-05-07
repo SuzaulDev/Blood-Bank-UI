@@ -1,9 +1,9 @@
 import 'package:blood_bank_app/bloc/drawer_bloc/drawer_bloc.dart';
 import 'package:blood_bank_app/bloc/drawer_bloc/drawer_event.dart';
 import 'package:blood_bank_app/bloc/drawer_bloc/drawer_state.dart';
-import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/applicationUser.dart';
-import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/menu_item_view.dart';
-import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/password_policy.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/app_user/applicationUser.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/menu_item/menu_item_view.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/password_policy/password_policy.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                       return dataView(context, state.userModelList);
                     }
                     if (state is ApplicationUser) {
-                      return applicationUserView();
+                      return  ApplicationUserView(appUserList: state.appUserList,passwordPolicyList: state.passwordPolicylist,);
                     }
                     if(state is PasswordPolicy){
                       //print(state.passwordPolicyList[0].);

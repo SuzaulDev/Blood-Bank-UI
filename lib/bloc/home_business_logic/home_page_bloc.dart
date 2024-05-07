@@ -1,5 +1,6 @@
 import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
+import 'package:blood_bank_app/data/models/app_user_response_model.dart';
 import 'package:blood_bank_app/data/services/menu_item_service.dart';
 import 'package:blood_bank_app/data/services/password_policy_service.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../data/models/users_models.dart';
 import '../../data/services/api_service.dart';
+import '../../data/services/app_user_service.dart';
 import 'home_page_event.dart';
 import 'home_page_state.dart';
 
@@ -15,6 +17,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   ApiService apiService;
   PasswordPolicyService policyService = PasswordPolicyService();
   MenuItemService menuItemService = MenuItemService(apiEndPoint: "api/privet/sya/menu-item");
+  AppUserService appUserService = AppUserService(apiEndPoint: "api/privet/sya/app-user");
 
   HomePageBloc(this.apiService) : super(HomePageInitial()) {
     on<LoadHomePage>((event, emit) async {
@@ -35,7 +38,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<ShowDrawerMenuDetails>((event, emit) async{
       switch (event.menuSerialNumber) {
         case 0:
-          emit(ApplicationUser());
+          emit(ApplicationUser(passwordPolicylist: await policyService.getAllData(),appUserList: await appUserService.getAllData()));
           break;
         case 1:
           emit(UserRole());
@@ -56,6 +59,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       then((value) async =>emit(MenuItem(menuItemList: await menuItemService.getAllData())) );
 
     } );
+    on<AddNewUser>((event, emit) async{
+      AppUserModel model = await appUserService.insertData(event.appUserModel);
+      emit(ApplicationUser(passwordPolicylist: await policyService.getAllData(),appUserList: await appUserService.getAllData()));
+      
+    });
   }
 
   @override

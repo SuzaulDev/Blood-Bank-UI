@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/const/app_colors.dart';
-import '../customView/custom_button.dart';
+import '../coustom_widget/custom_button.dart';
 
 
 
