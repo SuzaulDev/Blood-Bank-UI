@@ -25,7 +25,7 @@ class ForgotPage extends StatelessWidget {
             children: [
               const Text('Email'),
               SizedBox(
-                height: 10.h,
+                height: 10,
               ),
               customTextField(
                 hintText: 'Enter your email',
@@ -43,7 +43,7 @@ class ForgotPage extends StatelessWidget {
                 controller: _emailController,
               ),
               SizedBox(
-                height: 10.h,
+                height: 10,
               ),
               login_customButton(
                 backgroundColor: AppColors.blockColor,

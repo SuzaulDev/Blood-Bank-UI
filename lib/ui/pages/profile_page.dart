@@ -21,10 +21,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 120.h,
+        toolbarHeight: 120,
         title: Text(
           'Create Profile',
-          style: TextStyle(color: AppColors.whiteColor, fontSize: 20.sp),
+          style: TextStyle(color: AppColors.whiteColor, fontSize: 20),
         ),
         centerTitle: true,
         flexibleSpace: ClipPath(
@@ -40,8 +40,8 @@ class ProfilePage extends StatelessWidget {
               Positioned(
                 bottom: -50,
                 child: Container(
-                  height: 80.h,
-                  width: 80.w,
+                  height: 80,
+                  width: 80,
                   //color: Colors.black,
                   child: Stack(
                     children: [
@@ -53,8 +53,8 @@ class ProfilePage extends StatelessWidget {
                           right: 0,
                           bottom: 0,
                           child: Container(
-                            height: 32.h,
-                            width: 32.w,
+                            height: 32,
+                            width: 32,
                             decoration: BoxDecoration(
                                 color: Colors.black12,
                                 borderRadius: BorderRadius.circular(50)),
@@ -85,7 +85,7 @@ class ProfilePage extends StatelessWidget {
               children: [
                 Text('Name'),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 customTextFromField(
                   hintText: 'Sajib HAsan',
@@ -103,11 +103,11 @@ class ProfilePage extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 Text('Email'),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 customTextFromField(
                   hintText: 'sajib@gmail.com',
@@ -125,11 +125,11 @@ class ProfilePage extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 Text('Mobile'),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 //customTextFromField(hintText: '01725202511', controller: _mobileNoController, keyboardType: TextInputType.number, validator: (val){}, ),
                 IntlPhoneField(
@@ -139,11 +139,11 @@ class ProfilePage extends StatelessWidget {
                       border: OutlineInputBorder()),
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 Text('Dete of Birth'),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 //  customTextFromField(hintText: '10,5,2000', controller: _dateofbirthController, keyboardType: TextInputType.number, validator: (val){},),
                 DateTimePicker(
@@ -181,11 +181,7 @@ class ProfilePage extends StatelessWidget {
                     onPressed: (){
                       logOut();
                       print('Log out success');
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                            (route) => false,
-                      );
+                      Navigator.of(context).popAndPushNamed("/");
                     },
                     child: Text("Log out"))
               ],

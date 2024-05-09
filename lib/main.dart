@@ -34,28 +34,23 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => RegisterPageBloc(apiService: ApiService()),),
           BlocProvider(create: (context) => DrawerBloc(),)
         ],
-        child: ScreenUtilInit(
-          designSize: const Size(360, 690),
-          builder: (context, child) {
-            return MaterialApp(
-              initialRoute: '/',
-              routes: {
-                '/loginPage': (context) => LogInPage(),
-                '/registerPage': (context) => RegisterPage(),
-                '/forgotPage': (context) => ForgotPage(),
-                '/profilePage': (context) => ProfilePage(),
-                '/bloodType': (context) => BloodType(),
-                '/bloodGroup': (context) => BloodGroup(),
-              },
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                useMaterial3: true,
-              ),
-              debugShowCheckedModeBanner: false,
-              home: HomePage(),
-            );
+        child: MaterialApp(
+          initialRoute: '/',
+          routes: {
+            '/loginPage': (context) => LogInPage(),
+            '/registerPage': (context) => RegisterPage(),
+            '/forgotPage': (context) => ForgotPage(),
+            '/profilePage': (context) => ProfilePage(),
+            '/bloodType': (context) => BloodType(),
+            '/bloodGroup': (context) => BloodGroup(),
           },
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: HomePage(),
         ));
   }
 }

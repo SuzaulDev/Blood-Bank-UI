@@ -40,7 +40,7 @@ import 'package:http/http.dart' as http;
   dynamic _handleResponse(http.Response response) {
     if (response.statusCode == 200) {
       // Successful response
-      return json.decode(response.body);
+      return json.decode(utf8.decode(response.bodyBytes));
     } else {
       // Error response
       throw Exception('Failed to load data: ${response.statusCode}');

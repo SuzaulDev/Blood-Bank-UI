@@ -13,7 +13,7 @@ class ApplicationUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return LayoutBuilder(builder: (context, constraints) => Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Column(
@@ -67,6 +67,6 @@ class ApplicationUserView extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
   }
 }

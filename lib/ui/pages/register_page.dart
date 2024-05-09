@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: 'Log In with Goggle',
                       onPressed: () {}),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   login_customButton(
                       imageUrl: 'images/facebook.png',
@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: 'Log In with Facebook',
                       onPressed: () {}),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   login_customButton(
                       imageUrl: 'images/twitter.png',
@@ -70,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: 'Log In with Twitter',
                       onPressed: () {}),
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
                   const Row(
                     children: [
@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Text('Name'),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   //customTextField('Enter your name'),
                   customTextField(
@@ -108,11 +108,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _nameController,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   const Text('Email'),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   //customTextField('Enter your email'),
                   customTextField(
@@ -131,11 +131,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _emailController,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   const Text('Password'),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
 
                   customTextField(
@@ -170,11 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   BlocListener<RegisterPageBloc,RegisterPageState>(
                     listener: (context, state) {
                     if(state is RegisterSuccess){
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                            (route) => false,
-                      );
+                      Navigator.of(context).popAndPushNamed("/");
                     }
                   },
                     child:login_customButton(
