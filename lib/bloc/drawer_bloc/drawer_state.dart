@@ -1,3 +1,4 @@
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DrawerState extends Equatable{}
@@ -13,7 +14,7 @@ class DrawerLoading extends DrawerState{
 }
 class DrawerSuccess extends DrawerState{
   final userIdType;
-  final List menuItemList;
+  final List<MenuItemModel> menuItemList;
   DrawerSuccess({required this.userIdType,required this.menuItemList});
   @override
   // TODO: implement props

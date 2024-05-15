@@ -1,8 +1,11 @@
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_bloc.dart';
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_event.dart';
 import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/menu_item/menu_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/models/menu_item_response_model.dart';
 import '../../../../utils/const/app_colors.dart';
 
@@ -62,7 +65,7 @@ class MenuItemView extends StatelessWidget {
                 children: [
                   TableRow(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: AppColors.redColor,
                       border:
                           Border.all(strokeAlign: 0.01, color: Colors.black),
                     ),
@@ -147,7 +150,7 @@ class MenuItemView extends StatelessWidget {
                             ),
                             Center(
                               child: Text(
-                                student.value.url.toString(),
+                                student.value.menuUrl.toString(),
                               ),
                             ),
                             Center(
@@ -166,7 +169,9 @@ class MenuItemView extends StatelessWidget {
                                   ),
                                   IconButton(
                                     icon: Icon(Icons.delete,color: Colors.red,),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      context.read<HomePageBloc>().add(DeleteMenu(menuItem:student.value));
+                                    },
                                   ),
                                 ],
                               ),

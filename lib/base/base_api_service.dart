@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
  class BaseApiService {
-  final String baseURL = "http://192.168.0.100:8080/";
+  final String baseURL = "http://192.168.0.108:8080/";
 
   Future<Map<String, String>> getHeaders({authToken}) async {
     // Implement logic to get authentication headers or other required headers
@@ -34,6 +35,16 @@ import 'package:http/http.dart' as http;
       headers: await getHeaders(authToken: token),
       body: json.encode(data),
     );
+    return _handlePostResponse(response);
+  }
+
+  Future<dynamic> delete({required String endpoint,required dynamic data,token})async{
+    final response = await http.delete(
+      Uri.parse('$baseURL$endpoint'),
+      headers: await getHeaders(authToken: token),
+      body: jsonEncode(data),
+    );
+
     return _handleResponse(response);
   }
 
@@ -41,6 +52,16 @@ import 'package:http/http.dart' as http;
     if (response.statusCode == 200) {
       // Successful response
       return json.decode(utf8.decode(response.bodyBytes));
+    } else {
+      // Error response
+      throw Exception('Failed to load data: ${response.statusCode}');
+    }
+  }
+
+  dynamic _handlePostResponse(http.Response response) {
+    if (response.statusCode == 200) {
+      // Successful response
+      return json.decode(response.body);
     } else {
       // Error response
       throw Exception('Failed to load data: ${response.statusCode}');

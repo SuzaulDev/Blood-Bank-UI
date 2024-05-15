@@ -1,0 +1,46 @@
+import 'package:blood_bank_app/base/base_service.dart';
+import 'package:blood_bank_app/data/models/user_role_response_model.dart';
+import 'package:blood_bank_app/utils/helper_funtion.dart';
+
+import '../../base/base_api_service.dart';
+
+class UserRoleService extends BaseService<UserRoleResponseModel>{
+  final apiEndPoint ;
+
+  UserRoleService({required this.apiEndPoint});
+  BaseApiService baseApiService = BaseApiService();
+
+  @override
+  Future<UserRoleResponseModel> getAllData() async {
+    try{
+      UserRoleResponseModel model = UserRoleResponseModel.fromJson(await baseApiService.get(endpoint: apiEndPoint, token: await getAuthToken()));
+      return model;
+    }catch(e){
+      throw UnimplementedError();
+    }
+  }
+
+  @override
+  Future<UserRoleResponseModel> getDataById(int id) {
+    // TODO: implement getDataById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserRoleResponseModel> insertData(Object obj) {
+    // TODO: implement insertData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserRoleResponseModel> updateData(Object obj) {
+    // TODO: implement updateData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserRoleResponseModel> deleteData(Object obj) {
+    // TODO: implement deleteData
+    throw UnimplementedError();
+  }
+}

@@ -1,6 +1,6 @@
 import 'package:blood_bank_app/bloc/login_bloc/login_page_event.dart';
 import 'package:blood_bank_app/bloc/login_bloc/login_page_state.dart';
-import 'package:blood_bank_app/data/services/api_service.dart';
+import 'package:blood_bank_app/data/services/auth_service.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -10,15 +10,15 @@ import 'package:get/get.dart';
 /// **Version**: 1.0.0
 /// **Email**: sabbirr883@gmail.com
  class LoginPageBloc extends Bloc<LoginPageEvent,LoginPageState>{
-   final ApiService apiService;
-  LoginPageBloc({required this.apiService}):super(LoginPageInitial()){
+  LoginPageBloc():super(LoginPageInitial()){
     on<LoadLoginPage>((event, emit) => emit(LoginPageInitial()) );
+    AuthService authService = AuthService(apiEndPoint: "api/auth/signin");
 
     on<LoginOnClick>((event, emit) async {
       emit(LoginLoading());
       try{
         ///doing api calling
-       final logInResponseModel = await apiService.userLogin(event.username, event.password);
+       final logInResponseModel = await authService.userLogin(event.loginRequestModel);
           if(logInResponseModel.status == true){
             setLoginDetails(loginResponseModel: logInResponseModel);
             print("login details seved");

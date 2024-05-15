@@ -186,7 +186,7 @@ class _MenuItemBottomSheetState extends State<MenuItemBottomSheet> {
                       menuItem.name = _menuNameController.text;
                       menuItem.banglaName = _menuBanglaNameController.text;
                       menuItem.serialNo = int.parse(_menuSerialNoController.text);
-                      menuItem.url = _menuUrlController.text;
+                      menuItem.menuUrl = _menuUrlController.text;
                       menuItem.view = isView;
                       menuItem.insert = isInsert;
                       menuItem.update = isUpdate;

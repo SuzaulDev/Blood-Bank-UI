@@ -67,135 +67,67 @@ class MenuItemResponseModel {
   }
 }
 class MenuItemModel {
-  int? _id;
-  String? _name;
-  String? _banglaName;
-  bool? _active;
-  int? _menuType;
-  String? _menuTypeName;
-  int? _serialNo;
-  String? _url;
-  String? _icon;
-  bool? _view;
-  bool? _insert;
-  bool? _update;
-  bool? _delete;
+  int? id;
+  String? name;
+  String? banglaName;
+  bool? active;
+  int? menuType;
+  String? menuTypeName;
+  int? serialNo;
+  String? menuUrl;
+  String? icon;
+  bool? view;
+  bool? insert;
+  bool? update;
+  bool? delete;
+
 
   MenuItemModel(
-      {int? id,
-        String? name,
-        String? banglaName,
-        bool? active,
-        int? menuType,
-        String? menuTypeName,
-        int? serialNo,
-        String? url,
-        String? icon,
-        bool? view,
-        bool? insert,
-        bool? update,
-        bool? delete}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (name != null) {
-      this._name = name;
-    }
-    if (banglaName != null) {
-      this._banglaName = banglaName;
-    }
-    if (active != null) {
-      this._active = active;
-    }
-    if (menuType != null) {
-      this._menuType = menuType;
-    }
-    if (menuTypeName != null) {
-      this._menuTypeName = menuTypeName;
-    }
-    if (serialNo != null) {
-      this._serialNo = serialNo;
-    }
-    if (url != null) {
-      this._url = url;
-    }
-    if (icon != null) {
-      this._icon = icon;
-    }
-    if (view != null) {
-      this._view = view;
-    }
-    if (insert != null) {
-      this._insert = insert;
-    }
-    if (update != null) {
-      this._update = update;
-    }
-    if (delete != null) {
-      this._delete = delete;
-    }
-  }
-
-  int? get id => _id;
-  set id(int? id) => _id = id;
-  String? get name => _name;
-  set name(String? name) => _name = name;
-  String? get banglaName => _banglaName;
-  set banglaName(String? banglaName) => _banglaName = banglaName;
-  bool? get active => _active;
-  set active(bool? active) => _active = active;
-  int? get menuType => _menuType;
-  set menuType(int? menuType) => _menuType = menuType;
-  String? get menuTypeName => _menuTypeName;
-  set menuTypeName(String? menuTypeName) => _menuTypeName = menuTypeName;
-  int? get serialNo => _serialNo;
-  set serialNo(int? serialNo) => _serialNo = serialNo;
-  String? get url => _url;
-  set url(String? url) => _url = url;
-  String? get icon => _icon;
-  set icon(String? icon) => _icon = icon;
-  bool? get view => _view;
-  set view(bool? view) => _view = view;
-  bool? get insert => _insert;
-  set insert(bool? insert) => _insert = insert;
-  bool? get update => _update;
-  set update(bool? update) => _update = update;
-  bool? get delete => _delete;
-  set delete(bool? delete) => _delete = delete;
+      {this.id,
+        this.name,
+        this.banglaName,
+        this.active,
+        this.menuType,
+        this.menuTypeName,
+        this.serialNo,
+        this.menuUrl,
+        this.icon,
+        this.view,
+        this.insert,
+        this.update,
+        this.delete});
 
   MenuItemModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _name = json['name'];
-    _banglaName = json['banglaName'];
-    _active = json['active'];
-    _menuType = json['menuType'];
-    _menuTypeName = json['menuTypeName'];
-    _serialNo = json['serialNo'];
-    _url = json['url'];
-    _icon = json['icon'];
-    _view = json['view'];
-    _insert = json['insert'];
-    _update = json['update'];
-    _delete = json['delete'];
+    id = json['id'];
+    name = json['name'];
+    banglaName = json['banglaName'];
+    active = json['active'];
+    menuType = json['menuType'];
+    menuTypeName = json['menuTypeName'];
+    serialNo = json['serialNo'];
+    menuUrl = json['menuUrl'];
+    icon = json['icon'];
+    view = json['view'];
+    insert = json['insert'];
+    update = json['update'];
+    delete = json['delete'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['name'] = this._name;
-    data['banglaName'] = this._banglaName;
-    data['active'] = this._active;
-    data['menuType'] = this._menuType;
-    data['menuTypeName'] = this._menuTypeName;
-    data['serialNo'] = this._serialNo;
-    data['url'] = this._url;
-    data['icon'] = this._icon;
-    data['view'] = this._view;
-    data['insert'] = this._insert;
-    data['update'] = this._update;
-    data['delete'] = this._delete;
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['banglaName'] = this.banglaName;
+    data['active'] = this.active;
+    data['menuType'] = this.menuType;
+    data['menuTypeName'] = this.menuTypeName;
+    data['serialNo'] = this.serialNo;
+    data['menuUrl'] = this.menuUrl;
+    data['icon'] = this.icon;
+    data['view'] = this.view;
+    data['insert'] = this.insert;
+    data['update'] = this.update;
+    data['delete'] = this.delete;
     return data;
   }
-
-
 }

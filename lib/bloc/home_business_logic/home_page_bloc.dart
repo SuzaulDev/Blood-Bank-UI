@@ -1,27 +1,23 @@
-import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
-import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
 import 'package:blood_bank_app/data/models/app_user_response_model.dart';
 import 'package:blood_bank_app/data/services/menu_item_service.dart';
 import 'package:blood_bank_app/data/services/password_policy_service.dart';
+import 'package:blood_bank_app/data/services/user_role_assign_service.dart';
+import 'package:blood_bank_app/data/services/user_role_service.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
-import '../../data/models/users_models.dart';
-import '../../data/services/api_service.dart';
 import '../../data/services/app_user_service.dart';
 import 'home_page_event.dart';
 import 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  ApiService apiService;
-  PasswordPolicyService policyService = PasswordPolicyService();
-  MenuItemService menuItemService =
-      MenuItemService(apiEndPoint: "api/privet/sya/menu-item");
-  AppUserService appUserService =
-      AppUserService(apiEndPoint: "api/privet/sya/app-user");
+  PasswordPolicyService policyService = PasswordPolicyService(apiEndPoint:"api/privet/sya/password-policy");
+  MenuItemService menuItemService = MenuItemService(apiEndPoint: "api/privet/sya/menu-item");
+  AppUserService appUserService = AppUserService(apiEndPoint: "api/privet/sya/app-user");
+  UserRoleService userRoleService = UserRoleService(apiEndPoint: "api/privet/sya/user-role");
+  UserRoleAssignService userRoleAssignService = UserRoleAssignService(apiEndPoint: "api/privet/sya/user-role-assign");
 
-  HomePageBloc(this.apiService) : super(HomePageInitial()) {
+  HomePageBloc() : super(HomePageInitial()) {
     on<LoadHomePage>((event, emit) async {
       String token = await getAuthToken();
       int userTypeId = await getUserTypeId();
@@ -32,7 +28,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             userModelList: [], //await apiService.getData(),
             authToken: token,
             userTypeId: userTypeId,
-            menuItemList: await menuItemService.getAllData(),
+            menuItemResponse: await menuItemService.getAllData(),
           ),
         );
       } catch (e) {
@@ -41,50 +37,86 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
 
     on<ShowDrawerMenuDetails>((event, emit) async {
-      switch (event.menuSerialNumber) {
-        case 0:
+      switch (event.menuUrl) {
+        case "dashboard":
           emit(
             HomePageLoaded(
               userModelList: [],
               authToken: await getAuthToken(),
               userTypeId: await getUserTypeId(),
-              menuItemList: await menuItemService.getAllData(),
+              menuItemResponse: await menuItemService.getAllData(),
             ),
           );
-        case 1:
+        case "app-user":
           emit(
             ApplicationUser(
-              passwordPolicylist: await policyService.getAllData(),
-              appUserList: await appUserService.getAllData(),
+              passwordPolicyResponse: await policyService.getAllData(),
+              appUserResponse: await appUserService.getAllData(),
             ),
           );
           break;
-        case 2:
-          emit(UserRole());
+        case "user-role":
+          emit(UserRole(responseModel: await userRoleService.getAllData()));
           break;
-        case 3:
-          emit(UserRoleAsign());
+        case "user-role-assign":
+          emit(UserRoleAssign(
+            appUserResponseModel: await appUserService.getAllData(),
+            userRoleResponseModel: await userRoleService.getAllData(),
+            userRoleAssignResponseModel:
+                await userRoleAssignService.getAllData(),
+          ));
           break;
-        case 4:
+        case "password-policy":
           emit(PasswordPolicy(
-              passwordPolicyList: await policyService.getAllData()));
+            passwordPolicyResponse: await policyService.getAllData(),
+          ));
           break;
-        case 5:
-          emit(MenuItem(menuItemList: await menuItemService.getAllData()));
+        case "menu-item":
+          emit(MenuItem(menuItemResponse: await menuItemService.getAllData()));
           break;
       }
     });
     on<AddNewMenu>((event, emit) async {
-      final msg = await menuItemService.insertData(event.menuItem).then(
-          (value) async =>
-              emit(MenuItem(menuItemList: await menuItemService.getAllData())));
+      await menuItemService.insertData(event.menuItem).then((value) async =>
+          emit(MenuItem(menuItemResponse: await menuItemService.getAllData())));
+    });
+    on<DeleteMenu>((event, emit) async {
+      await menuItemService.deleteData(event.menuItem,).then((value) async =>
+          emit(
+            MenuItem(
+              menuItemResponse: await menuItemService.getAllData(),
+            ),
+          ));
     });
     on<AddNewUser>((event, emit) async {
-      AppUserModel model = await appUserService.insertData(event.appUserModel);
+      AppUserResponseModel model = await appUserService.insertData(event.appUserModel);
       emit(ApplicationUser(
-          passwordPolicylist: await policyService.getAllData(),
-          appUserList: await appUserService.getAllData()));
+          passwordPolicyResponse: await policyService.getAllData(),
+          appUserResponse: await appUserService.getAllData()));
     });
+    on<SetUserRole>((event, emit) async {
+      await userRoleAssignService.insertData(event.userRoleAssignModel).then((value)async {
+        emit(UserRoleAssign(
+          appUserResponseModel: await appUserService.getAllData(),
+          userRoleResponseModel: await userRoleService.getAllData(),
+          userRoleAssignResponseModel: await userRoleAssignService.getAllData(),
+        ));
+      });
+    });
+
+
+    on<DeleteUserRoleAssign>((event, emit)async {
+      await userRoleAssignService.deleteData(event.userRoleAssignModel).then((value) async{
+        emit(UserRoleAssign(
+          appUserResponseModel: await appUserService.getAllData(),
+          userRoleResponseModel: await userRoleService.getAllData(),
+          userRoleAssignResponseModel:
+          await userRoleAssignService.getAllData(),
+        ));
+      });
+    });
+
+
   }
 
   @override

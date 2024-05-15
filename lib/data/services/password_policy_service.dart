@@ -4,38 +4,41 @@ import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
 import '../../base/base_api_service.dart';
 import '../../utils/helper_funtion.dart';
 
-class PasswordPolicyService extends BaseService<PasswordPolicyModel>{
+class PasswordPolicyService extends BaseService<PasswordPolicyResponseModel>{
+  final apiEndPoint;
+  PasswordPolicyService({required this.apiEndPoint});
+
   @override
-  Future<PasswordPolicyModel> deleteData(Object obj) {
+  Future<PasswordPolicyResponseModel> deleteData(Object obj) {
     // TODO: implement deleteData
     throw UnimplementedError();
   }
 
   @override
-  Future<List<PasswordPolicyModel>> getAllData() async{
+  Future<PasswordPolicyResponseModel> getAllData() async{
     try{
       BaseApiService baseApiService = BaseApiService();
-      PasswordPolicyResponseModel model = PasswordPolicyResponseModel.fromJson(await baseApiService.get(endpoint:"api/privet/sya/password-policy",token: await getAuthToken()));
-      return model.data!;
+      PasswordPolicyResponseModel model = PasswordPolicyResponseModel.fromJson(await baseApiService.get(endpoint:apiEndPoint,token: await getAuthToken()));
+      return model;
     }catch(e){
-      return [];
+      return PasswordPolicyResponseModel();
     }
   }
 
   @override
-  Future<PasswordPolicyModel> getDataById(int id) {
+  Future<PasswordPolicyResponseModel> getDataById(int id) {
     // TODO: implement getDataById
     throw UnimplementedError();
   }
 
   @override
-  Future<PasswordPolicyModel> insertData(Object obj) {
+  Future<PasswordPolicyResponseModel> insertData(Object obj) {
     // TODO: implement insertData
     throw UnimplementedError();
   }
 
   @override
-  Future<PasswordPolicyModel> updateData(Object obj) {
+  Future<PasswordPolicyResponseModel> updateData(Object obj) {
     // TODO: implement updateData
     throw UnimplementedError();
   }

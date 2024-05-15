@@ -10,10 +10,8 @@ import 'package:blood_bank_app/ui/pages/profile_page.dart';
 import 'package:blood_bank_app/ui/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'bloc/home_business_logic/home_page_bloc.dart';
-import 'data/services/api_service.dart';
+
 
 
 
@@ -29,9 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => HomePageBloc(ApiService())),
-          BlocProvider(create: (context) => LoginPageBloc(apiService: ApiService()),),
-          BlocProvider(create: (context) => RegisterPageBloc(apiService: ApiService()),),
+          BlocProvider(create: (context) => HomePageBloc()),
+          BlocProvider(create: (context) => LoginPageBloc(),),
+          BlocProvider(create: (context) => RegisterPageBloc(),),
           BlocProvider(create: (context) => DrawerBloc(),)
         ],
         child: MaterialApp(

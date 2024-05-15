@@ -4,7 +4,7 @@ import 'package:blood_bank_app/utils/helper_funtion.dart';
 
 import '../../base/base_api_service.dart';
 
-class AppUserService extends BaseService<AppUserModel>{
+class AppUserService extends BaseService<AppUserResponseModel>{
   final apiEndPoint ;
   AppUserService({required this.apiEndPoint});
   BaseApiService baseApiService = BaseApiService();
@@ -12,38 +12,38 @@ class AppUserService extends BaseService<AppUserModel>{
 
 
   @override
-  Future<List<AppUserModel>> getAllData() async{
+  Future<AppUserResponseModel> getAllData() async{
     try{
       AppUserResponseModel model = AppUserResponseModel.fromJson(await baseApiService.get(endpoint: apiEndPoint,token: await getAuthToken()));
-      return model.data!;
+      return model;
     }catch(e){
     throw UnimplementedError();
     }
   }
 
   @override
-  Future<AppUserModel> getDataById(int id) {
+  Future<AppUserResponseModel> getDataById(int id) {
     // TODO: implement getDataById
     throw UnimplementedError();
   }
 
   @override
-  Future<AppUserModel> insertData(Object obj) async {
+  Future<AppUserResponseModel> insertData(Object obj) async {
     try{
-      AppUserModel appUser = AppUserModel.fromJson( await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken()));
-      return appUser;
+      AppUserResponseModel appUserRes = AppUserResponseModel.fromJson( await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken()));
+      return appUserRes;
     }catch(e){
       throw UnimplementedError();
     }
   }
 
   @override
-  Future<AppUserModel> updateData(Object obj) {
+  Future<AppUserResponseModel> updateData(Object obj) {
     // TODO: implement updateData
     throw UnimplementedError();
   }
   @override
-  Future<AppUserModel> deleteData(Object obj) {
+  Future<AppUserResponseModel> deleteData(Object obj) {
     // TODO: implement deleteData
     throw UnimplementedError();
   }

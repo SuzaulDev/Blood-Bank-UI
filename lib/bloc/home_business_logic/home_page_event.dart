@@ -1,6 +1,7 @@
 import 'package:blood_bank_app/bloc/home_business_logic/home_page_state.dart';
 import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/data/models/app_user_response_model.dart';
+import 'package:blood_bank_app/data/models/user_role_assign_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomePageEvent extends Equatable{
@@ -16,8 +17,8 @@ class LoadHomePage extends HomePageEvent{
 
 }
 class ShowDrawerMenuDetails extends HomePageEvent{
-  final menuSerialNumber;
-  ShowDrawerMenuDetails({this.menuSerialNumber});
+  final menuUrl;
+  ShowDrawerMenuDetails({this.menuUrl});
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -31,10 +32,43 @@ class AddNewMenu extends HomePageEvent{
   List<Object?> get props => [];
 
 }
+class UpdateMenu extends HomePageEvent{
+  final  MenuItemModel menuItem;
+  UpdateMenu({required this.menuItem});
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[];
+
+}
+class DeleteMenu extends HomePageEvent{
+  final  MenuItemModel menuItem;
+  DeleteMenu({required this.menuItem});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+
+}
 class AddNewUser extends HomePageEvent{
   final AppUserModel appUserModel;
   AddNewUser({required this.appUserModel});
 
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+
+}
+
+class SetUserRole extends HomePageEvent {
+  final UserRoleAssignModel userRoleAssignModel;
+  SetUserRole({required this.userRoleAssignModel});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+class DeleteUserRoleAssign extends HomePageEvent{
+  final UserRoleAssignModel userRoleAssignModel;
+  DeleteUserRoleAssign({ required this.userRoleAssignModel});
   @override
   // TODO: implement props
   List<Object?> get props => [];

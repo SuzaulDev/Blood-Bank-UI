@@ -12,22 +12,22 @@ import '../../../coustom_widget/custom_menu_button.dart';
 import '../../../coustom_widget/custom_menu_text_field.dart';
 import '../../../coustom_widget/custom_drop_down.dart';
 
-class AppUserBottmSheet extends StatefulWidget {
+class AppUserBottomSheet extends StatefulWidget {
   final List<PasswordPolicyModel> passwordPolicy;
   final titelText;
 
-   const AppUserBottmSheet({
+   const AppUserBottomSheet({
     super.key,
     required this.titelText,
     required this.passwordPolicy
   });
 
   @override
-  State<AppUserBottmSheet> createState() => _MenuItemBottomSheetState();
+  State<AppUserBottomSheet> createState() => _MenuItemBottomSheetState();
 }
 
-class _MenuItemBottomSheetState extends State<AppUserBottmSheet> {
-  bool isActive = true;
+class _MenuItemBottomSheetState extends State<AppUserBottomSheet> {
+    bool isActive = true;
    String _selectedValue = "";
 
   final _passwordPolicyController = TextEditingController();

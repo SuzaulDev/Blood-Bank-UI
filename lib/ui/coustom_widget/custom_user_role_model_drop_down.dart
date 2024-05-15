@@ -1,16 +1,17 @@
+import 'package:blood_bank_app/data/models/user_role_response_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../../data/models/menu_item_response_model.dart';
 
-class CustomDropdownMenu extends StatefulWidget {
-  final dropDownList;
+class CustomUserRoleModelDropdownMenu extends StatefulWidget {
+  final List<UserRoleModel> dropDownList;
   final controller;
   final hintText;
   final bool isRequired;
   final Function selectedValue;
 
-  const CustomDropdownMenu(
+  const CustomUserRoleModelDropdownMenu(
       {super.key,
       required this.dropDownList,
       required this.controller,
@@ -19,10 +20,10 @@ class CustomDropdownMenu extends StatefulWidget {
       required this.selectedValue});
 
   @override
-  State<CustomDropdownMenu> createState() => _DropdownMenuExampleState();
+  State<CustomUserRoleModelDropdownMenu> createState() => _CustomUserRoleModelDropdownMenu();
 }
 
-class _DropdownMenuExampleState extends State<CustomDropdownMenu> {
+class _CustomUserRoleModelDropdownMenu extends State<CustomUserRoleModelDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -58,7 +59,7 @@ class _DropdownMenuExampleState extends State<CustomDropdownMenu> {
         },
         dropdownMenuEntries:
             widget.dropDownList.map<DropdownMenuEntry<String>>((e) {
-          return DropdownMenuEntry(value: e.id.toString(), label: e.name!);
+          return DropdownMenuEntry(value: e.userRoleMaster!.id.toString(), label: e.userRoleMaster!.name!);
         }).toList(),
       ),
     );

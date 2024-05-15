@@ -1,20 +1,57 @@
+import 'package:blood_bank_app/data/models/app_user_response_model.dart';
+import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/app_user/application_user_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../bloc/home_business_logic/home_page_bloc.dart';
+import '../../../../bloc/home_business_logic/home_page_event.dart';
 import '../../../../utils/const/app_colors.dart';
+import '../menu_item/menu_bottom_sheet.dart';
 
-class PasswordPolicyView extends StatelessWidget {
+class ApplicationUserView extends StatelessWidget {
+  final List<AppUserModel> appUserList;
   final List<PasswordPolicyModel> passwordPolicyList;
-
-  const PasswordPolicyView({super.key, required this.passwordPolicyList});
+   const ApplicationUserView({super.key,required this.appUserList,required this.passwordPolicyList});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return LayoutBuilder(builder: (context, constraints) => Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
+            InkWell(
+              onTap: () {
+                showBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return  AppUserBottomSheet(
+                      passwordPolicy: passwordPolicyList,
+                      titelText: "Application User",
+                    );
+                  },
+                );
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [AppColors.whiteColor, AppColors.redColor]),
+                    borderRadius: BorderRadius.all(Radius.circular(23))),
+                child: const Center(
+                    child: Text(
+                      "Add new User",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.whiteColor,
+                      ),
+                    )),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Table(
@@ -84,7 +121,7 @@ class PasswordPolicyView extends StatelessWidget {
                           )),
                     ],
                   ),
-                  ...passwordPolicyList.asMap().entries.map(
+                  ...appUserList.asMap().entries.map(
                         (student) {
                       return TableRow(
                           decoration: BoxDecoration(
@@ -109,12 +146,12 @@ class PasswordPolicyView extends StatelessWidget {
                             ),
                             Center(
                               child: Text(
-                                student.value.minLength.toString(),
+                                '${student.value.displayName}',
                               ),
                             ),
                             Center(
                               child: Text(
-                                student.value.passwordRemember.toString(),
+                                student.value.active.toString(),
                               ),
                             ),
                             Center(
@@ -145,10 +182,10 @@ class PasswordPolicyView extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
-    );
+    ),);
   }
 }
