@@ -1,12 +1,18 @@
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_bloc.dart';
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_event.dart';
+import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/user_role/user_role_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/models/menu_item_response_model.dart';
 import '../../../../data/models/user_role_response_model.dart';
 import '../../../../utils/const/app_colors.dart';
 
 class UserRoleView extends StatefulWidget {
   final List<UserRoleModel> userRoleList;
+  final List<MenuItemModel> menuItemList;
 
-  const UserRoleView({super.key, required this.userRoleList});
+  const UserRoleView({super.key, required this.userRoleList,required this.menuItemList});
 
   @override
   State<UserRoleView> createState() => _UserRoleViewState();
@@ -21,9 +27,16 @@ class _UserRoleViewState extends State<UserRoleView> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
+            TextButton(
+              onPressed: () {
+                showBottomSheet(context: context, builder: (context) =>
+                    UserRoleBottomSheet( menuItemList: widget.menuItemList, titelText: "User Role"),);
+              },
+              child: Text("Add New"),
+            ),
+           Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _buildPanel(),
+              child: widget.userRoleList.isNotEmpty ? _buildPanel():const Center(child: Text("No Data Found")),
             ),
           ],
         ),
@@ -47,6 +60,10 @@ class _UserRoleViewState extends State<UserRoleView> {
             return ListTile(
               leading: Text(item.userRoleMaster!.id.toString()),
               title: Text(item.userRoleMaster!.name.toString()),
+              trailing: IconButton(onPressed: (){
+                context.read<HomePageBloc>().add(DeleteUserRole(userRoleModel: item));
+              },
+                  icon: Icon(Icons.delete,color: Colors.red,)),
             );
           },
           body: Padding(

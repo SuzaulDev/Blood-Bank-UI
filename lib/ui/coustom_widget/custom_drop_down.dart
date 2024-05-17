@@ -13,7 +13,7 @@ class CustomDropdownMenu extends StatefulWidget {
   const CustomDropdownMenu(
       {super.key,
       required this.dropDownList,
-      required this.controller,
+        this.controller,
       required this.hintText,
       required this.isRequired,
       required this.selectedValue});

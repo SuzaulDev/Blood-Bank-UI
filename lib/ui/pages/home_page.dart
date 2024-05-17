@@ -19,6 +19,7 @@ import '../../utils/const/app_colors.dart';
 import '../../utils/constant_value.dart';
 import '../../utils/constant_value.dart';
 import '../../utils/constant_value.dart';
+import '../../utils/constant_value.dart';
 import '../customView/dashboard.dart';
 import '../customView/temp_data_view.dart';
 
@@ -228,8 +229,7 @@ class _HomePageState extends State<HomePage> {
                               );
                             }
                             if (state is UserRole) {
-                              return UserRoleView(
-                                  userRoleList: state.responseModel.data!);
+                              return UserRoleView(userRoleList: state.responseModel.data!,menuItemList:state.menuItemResponseModel.data!,);
                             }
                             if (state is UserRoleAssign) {
                               return UserRoleAssignView(
@@ -341,31 +341,31 @@ Widget drawerView(BoxConstraints constraints) {
                   if (state.userIdType == 3)ListView.builder(
                     shrinkWrap: true,
                     itemCount: systemAdminMenu.length,
-                    itemBuilder: (context, index) => ListTile(
-                      onTap: () {
-                        context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: systemAdminMenu[index].menuUrl));
-                        if(constraints.maxWidth < 600){
-                          Navigator.pop(context);
-                        }
-                      },
-                      title: Text(systemAdminMenu[index].name.toString()),
-                    ),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: systemAdminMenu[index].menuUrl));
+                          if(constraints.maxWidth < 600){
+                            Navigator.pop(context);
+                          }
+                        },
+                        title: Text(systemAdminMenu[index].name.toString()),
+                        leading: Icon(iconsMap["${systemAdminMenu[index].icon}"]),
+                      );
+                    }
                   ),
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount: state.menuItemList.length,
                       itemBuilder: (context, index) => ListTile(
                         onTap: () {
-                          context.read<HomePageBloc>().add(
-                              ShowDrawerMenuDetails(
-                                  menuUrl:
-                                      state.menuItemList[index].menuUrl));
+                          context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: state.menuItemList[index].menuUrl));
                           if (constraints.maxWidth < 600) {
                             Navigator.pop(context);
                           }
                         },
-                        title:
-                            Text(state.menuItemList[index].name.toString()),
+                        title: Text(state.menuItemList[index].name.toString()),
+                        leading: Icon(iconsMap["${state.menuItemList[index].icon}"]),
                       ),
                     ),
                 ],

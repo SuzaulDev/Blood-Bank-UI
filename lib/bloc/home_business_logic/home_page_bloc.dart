@@ -11,7 +11,7 @@ import 'home_page_event.dart';
 import 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  PasswordPolicyService policyService = PasswordPolicyService(apiEndPoint:"api/privet/sya/password-policy");
+  PasswordPolicyService policyService = PasswordPolicyService(apiEndPoint: "api/privet/sya/password-policy");
   MenuItemService menuItemService = MenuItemService(apiEndPoint: "api/privet/sya/menu-item");
   AppUserService appUserService = AppUserService(apiEndPoint: "api/privet/sya/app-user");
   UserRoleService userRoleService = UserRoleService(apiEndPoint: "api/privet/sya/user-role");
@@ -56,7 +56,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           );
           break;
         case "user-role":
-          emit(UserRole(responseModel: await userRoleService.getAllData()));
+          emit(UserRole(
+              responseModel: await userRoleService.getAllData(),
+              menuItemResponseModel: await menuItemService.getAllData()));
           break;
         case "user-role-assign":
           emit(UserRoleAssign(
@@ -81,21 +83,27 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           emit(MenuItem(menuItemResponse: await menuItemService.getAllData())));
     });
     on<DeleteMenu>((event, emit) async {
-      await menuItemService.deleteData(event.menuItem,).then((value) async =>
-          emit(
-            MenuItem(
-              menuItemResponse: await menuItemService.getAllData(),
-            ),
-          ));
+      await menuItemService
+          .deleteData(
+            event.menuItem,
+          )
+          .then((value) async => emit(
+                MenuItem(
+                  menuItemResponse: await menuItemService.getAllData(),
+                ),
+              ));
     });
     on<AddNewUser>((event, emit) async {
-      AppUserResponseModel model = await appUserService.insertData(event.appUserModel);
+      AppUserResponseModel model =
+          await appUserService.insertData(event.appUserModel);
       emit(ApplicationUser(
           passwordPolicyResponse: await policyService.getAllData(),
           appUserResponse: await appUserService.getAllData()));
     });
     on<SetUserRole>((event, emit) async {
-      await userRoleAssignService.insertData(event.userRoleAssignModel).then((value)async {
+      await userRoleAssignService
+          .insertData(event.userRoleAssignModel)
+          .then((value) async {
         emit(UserRoleAssign(
           appUserResponseModel: await appUserService.getAllData(),
           userRoleResponseModel: await userRoleService.getAllData(),
@@ -103,20 +111,32 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ));
       });
     });
+    on<AddNewUserRole>((event, emit) async {
+      await userRoleService.insertData(event.userRoleModel).then(
+          (value) async => emit(UserRole(
+              responseModel: await userRoleService.getAllData(),
+              menuItemResponseModel: await menuItemService.getAllData())),
+      );
+    });
+    on<DeleteUserRole>((event, emit)async {
+      await userRoleService.deleteData(event.userRoleModel).then((value)async =>
+          emit(UserRole(
+              responseModel: await userRoleService.getAllData(),
+              menuItemResponseModel: await menuItemService.getAllData()
+          ),
+          ),
+      );
+    });
 
-
-    on<DeleteUserRoleAssign>((event, emit)async {
-      await userRoleAssignService.deleteData(event.userRoleAssignModel).then((value) async{
+    on<DeleteUserRoleAssign>((event, emit) async {
+      await userRoleAssignService.deleteData(event.userRoleAssignModel).then((value) async {
         emit(UserRoleAssign(
           appUserResponseModel: await appUserService.getAllData(),
           userRoleResponseModel: await userRoleService.getAllData(),
-          userRoleAssignResponseModel:
-          await userRoleAssignService.getAllData(),
+          userRoleAssignResponseModel: await userRoleAssignService.getAllData(),
         ));
       });
     });
-
-
   }
 
   @override

@@ -27,9 +27,14 @@ class UserRoleService extends BaseService<UserRoleResponseModel>{
   }
 
   @override
-  Future<UserRoleResponseModel> insertData(Object obj) {
-    // TODO: implement insertData
-    throw UnimplementedError();
+  Future<UserRoleResponseModel> insertData(Object obj) async {
+   try{
+     await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken());
+     return UserRoleResponseModel();
+   }
+   catch(e){
+     throw UnimplementedError(e.toString());
+   }
   }
 
   @override
@@ -39,8 +44,14 @@ class UserRoleService extends BaseService<UserRoleResponseModel>{
   }
 
   @override
-  Future<UserRoleResponseModel> deleteData(Object obj) {
-    // TODO: implement deleteData
-    throw UnimplementedError();
+  Future<UserRoleResponseModel> deleteData(Object obj) async{
+    try{
+      await baseApiService.delete(endpoint: apiEndPoint, data: obj,token: await getAuthToken());
+      return UserRoleResponseModel();
+    }
+    catch(e){
+      throw UnimplementedError(e.toString());
+    }
+
   }
 }

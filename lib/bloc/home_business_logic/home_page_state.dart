@@ -54,12 +54,13 @@ class ApplicationUser extends HomePageState {
 
 class UserRole extends HomePageState {
   final UserRoleResponseModel responseModel;
+  final MenuItemResponseModel menuItemResponseModel;
 
-  UserRole({required this.responseModel});
+  UserRole({required this.responseModel, required this.menuItemResponseModel});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [responseModel];
+  List<Object?> get props => [responseModel,menuItemResponseModel];
 }
 
 class UserRoleAssign extends HomePageState {

@@ -117,7 +117,7 @@ class UserRoleMaster {
   int? _id;
   String? _name;
   String? _banglaName;
-  bool? _active;
+  bool? _active = true;
 
   UserRoleMaster(
       {int? id,

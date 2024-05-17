@@ -39,6 +39,7 @@ class _UserRoleASsignBottomSheet extends State<UserRoleAssignBottomSheet> {
   Widget build(BuildContext context) {
     return BottomSheet(
       onClosing: () {},
+      enableDrag: false,
       builder: (context) => Container(
         height: 400,
         child: ListView(
