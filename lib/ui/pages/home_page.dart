@@ -229,7 +229,10 @@ class _HomePageState extends State<HomePage> {
                               );
                             }
                             if (state is UserRole) {
-                              return UserRoleView(userRoleList: state.responseModel.data!,menuItemList:state.menuItemResponseModel.data!,);
+                              return UserRoleView(
+                                userRoleList: state.responseModel.data!,
+                                menuItemList: state.menuItemResponseModel.data!,
+                              );
                             }
                             if (state is UserRoleAssign) {
                               return UserRoleAssignView(
@@ -318,8 +321,8 @@ Widget drawerView(BoxConstraints constraints) {
             color: AppColors.redColor,
           ),
           child: Center(
-            child: BlocBuilder<DrawerBloc, DrawerState>(
-                builder: (context, state) {
+            child:
+                BlocBuilder<DrawerBloc, DrawerState>(builder: (context, state) {
               if (state is DrawerSuccess) {
                 if (state.userIdType == 3) {
                   return const Text(
@@ -338,36 +341,57 @@ Widget drawerView(BoxConstraints constraints) {
               return ListView(
                 shrinkWrap: true,
                 children: [
-                  if (state.userIdType == 3)ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: systemAdminMenu.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        onTap: () {
-                          context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: systemAdminMenu[index].menuUrl));
-                          if(constraints.maxWidth < 600){
-                            Navigator.pop(context);
-                          }
-                        },
-                        title: Text(systemAdminMenu[index].name.toString()),
-                        leading: Icon(iconsMap["${systemAdminMenu[index].icon}"]),
-                      );
-                    }
-                  ),
+                  if (state.userIdType == 3)
                     ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.menuItemList.length,
-                      itemBuilder: (context, index) => ListTile(
-                        onTap: () {
-                          context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: state.menuItemList[index].menuUrl));
-                          if (constraints.maxWidth < 600) {
-                            Navigator.pop(context);
-                          }
-                        },
-                        title: Text(state.menuItemList[index].name.toString()),
-                        leading: Icon(iconsMap["${state.menuItemList[index].icon}"]),
-                      ),
+                        shrinkWrap: true,
+                        itemCount: systemAdminMenu.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              context.read<HomePageBloc>().add(
+                                  ShowDrawerMenuDetails(
+                                      menuUrl: systemAdminMenu[index].menuUrl));
+                              if (constraints.maxWidth < 600) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            title: Text(systemAdminMenu[index].name.toString()),
+                            leading: Icon(
+                                iconsMap["${systemAdminMenu[index].icon}"]),
+                          );
+                        }),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: state.menuItemList.length,
+                    itemBuilder: (context, index) => ListTile(
+                      onTap: () {
+                        context.read<HomePageBloc>().add(ShowDrawerMenuDetails(
+                            menuUrl: state.menuItemList[index].menuUrl));
+                        if (constraints.maxWidth < 600) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      title: Text(state.menuItemList[index].name.toString()),
+                      leading:
+                          Icon(iconsMap["${state.menuItemList[index].icon}"]),
                     ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: defultMenu.length,
+                    itemBuilder: (context, index) => ListTile(
+                      onTap: () {
+                        //context.read<HomePageBloc>().add(ShowDrawerMenuDetails(menuUrl: state.menuItemList[index].menuUrl));
+                        if (constraints.maxWidth < 600) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      title: Text(defultMenu[index].name.toString()),
+                      leading: Icon(iconsMap["${defultMenu[index].icon}"]),
+                    ),
+                  ),
                 ],
               );
             } else {

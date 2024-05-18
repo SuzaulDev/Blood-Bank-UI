@@ -181,11 +181,12 @@ class _MenuItemBottomSheetState extends State<MenuItemBottomSheet> {
                     btnColor: AppColors.redColor,
                     onClick: () {
                       MenuItemModel menuItem = MenuItemModel();
-                      menuItem.menuType = bloodGroupType.indexOf(_menuTypeController.text);
-                      menuItem.menuTypeName = _menuTypeController.text;
+                      menuItem.menuType = 2;
+                      menuItem.menuTypeName = "MENU";
                       menuItem.name = _menuNameController.text;
                       menuItem.banglaName = _menuBanglaNameController.text;
-                      menuItem.serialNo = int.parse(_menuSerialNoController.text);
+                      menuItem.serialNo =
+                          int.parse(_menuSerialNoController.text);
                       menuItem.menuUrl = _menuUrlController.text;
                       menuItem.view = isView;
                       menuItem.insert = isInsert;
@@ -193,7 +194,9 @@ class _MenuItemBottomSheetState extends State<MenuItemBottomSheet> {
                       menuItem.delete = isDelete;
 
                       //add event ............
-                      context.read<HomePageBloc>().add(AddNewMenu(menuItem: menuItem));
+                      context
+                          .read<HomePageBloc>()
+                          .add(AddNewMenu(menuItem: menuItem));
 
                       //pop bottomsheet................
                       Navigator.pop(context);

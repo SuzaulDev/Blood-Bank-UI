@@ -6,21 +6,22 @@ import 'package:blood_bank_app/utils/helper_funtion.dart';
 
 import '../../base/base_api_service.dart';
 
-class MenuItemService extends BaseService<MenuItemResponseModel>{
-  final apiEndPoint ;
+class MenuItemService extends BaseService<MenuItemResponseModel> {
+  final apiEndPoint;
   MenuItemService({required this.apiEndPoint});
   BaseApiService baseApiService = BaseApiService();
 
   @override
   Future<MenuItemResponseModel> insertData(Object obj) async {
-    try{
-      MenuItemModel itemModel = MenuItemModel.fromJson(await baseApiService.post(endpoint: apiEndPoint,data: obj,token: await getAuthToken()));
+    try {
+      MenuItemModel itemModel = MenuItemModel.fromJson(await baseApiService
+          .post(endpoint: apiEndPoint, data: obj, token: await getAuthToken()));
       MenuItemResponseModel responseModel = MenuItemResponseModel();
       responseModel.message = "Success";
 
-     return  responseModel;
-    }catch(e){
-    throw UnimplementedError();
+      return responseModel;
+    } catch (e) {
+      throw UnimplementedError();
     }
   }
 
@@ -31,26 +32,27 @@ class MenuItemService extends BaseService<MenuItemResponseModel>{
   }
 
   @override
-  Future<MenuItemResponseModel> deleteData(Object obj) async{
-    try{
-      await baseApiService.delete(endpoint: apiEndPoint,data: obj,token: await getAuthToken());
+  Future<MenuItemResponseModel> deleteData(Object obj) async {
+    try {
+      await baseApiService.delete(
+          endpoint: apiEndPoint, data: obj, token: await getAuthToken());
       return MenuItemResponseModel();
-    }
-    catch(e){
+    } catch (e) {
       print(e);
       return MenuItemResponseModel();
     }
   }
 
-
   @override
   Future<MenuItemResponseModel> getAllData() async {
-    try{
-      MenuItemResponseModel responseModel = MenuItemResponseModel.fromJson(await baseApiService.get(endpoint: apiEndPoint,token: await getAuthToken()));
-    return responseModel;
-    }catch(e){
-    print(e);
-    throw UnimplementedError();
+    try {
+      MenuItemResponseModel responseModel = MenuItemResponseModel.fromJson(
+          await baseApiService.get(
+              endpoint: apiEndPoint, token: await getAuthToken()));
+      return responseModel;
+    } catch (e) {
+      print(e);
+      throw UnimplementedError();
     }
   }
 
@@ -60,16 +62,14 @@ class MenuItemService extends BaseService<MenuItemResponseModel>{
     throw UnimplementedError();
   }
 
-  Future<MenuItemResponseModel> getUserMenu()async{
-    try{
-      MenuItemResponseModel model = MenuItemResponseModel.fromJson(await baseApiService.get(endpoint: apiEndPoint,token: await getAuthToken()));
+  Future<MenuItemResponseModel> getUserMenu() async {
+    try {
+      MenuItemResponseModel model = MenuItemResponseModel.fromJson(
+          await baseApiService.get(
+              endpoint: apiEndPoint, token: await getAuthToken()));
       return model;
-    }
-    catch(e){
+    } catch (e) {
       throw UnimplementedError(e.toString());
     }
   }
-
-
-  
 }
