@@ -3,7 +3,6 @@ import 'package:blood_bank_app/bloc/login_bloc/login_page_state.dart';
 import 'package:blood_bank_app/data/services/auth_service.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 
 
 /// **Author**: Md. Sabbir Hossain
@@ -17,17 +16,27 @@ import 'package:get/get.dart';
     on<LoginOnClick>((event, emit) async {
       emit(LoginLoading());
       try{
-        ///doing api calling
        final logInResponseModel = await authService.userLogin(event.loginRequestModel);
-          if(logInResponseModel.status == true){
-            setLoginDetails(loginResponseModel: logInResponseModel);
-            print("login details seved");
-            emit(LoginSuccess(logInResponseModel: logInResponseModel));
-          }
+       if(logInResponseModel.status == true){
+
+         Future.delayed(
+           Duration(milliseconds: logInResponseModel.data!.loginExpierDuration!),
+             (){
+             logOut();
+             }
+         );
+
+
+         setLoginDetails(loginResponseModel: logInResponseModel);
+         emit(LoginSuccess(logInResponseModel: logInResponseModel));
+       }
+       else{
+         emit(LoginSuccess(logInResponseModel: logInResponseModel));
+       }
       }catch(error)
       {
         print("this is your error $error");
-        emit(LoginPageError(error: error.printError.toString()));
+        emit(LoginPageError(error: error.toString()));
       }
     });
   }

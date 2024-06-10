@@ -1,8 +1,12 @@
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_bloc.dart';
+import 'package:blood_bank_app/bloc/home_business_logic/home_page_state.dart';
+import 'package:blood_bank_app/bloc/my_profile_bloc/my_profile_bloc.dart';
+import 'package:blood_bank_app/bloc/my_profile_bloc/my_profile_state.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../utils/const/app_colors.dart';
 import '../coustom_widget/custom_button.dart';
@@ -19,12 +23,23 @@ class ProfilePage extends StatelessWidget {
   bool isPhoneValidated = false;
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 120,
-        title: Text(
-          'Create Profile',
-          style: TextStyle(color: AppColors.whiteColor, fontSize: 20),
+        automaticallyImplyLeading: screenWidth > 600 ? false : true,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: BlocBuilder<MyProfileBloc,MyProfileState>(
+          builder: (context, state) {
+            if(state is MyProfileSuccess){
+              return Text( state.appUserModel.displayName!,
+                style: const TextStyle(color: AppColors.whiteColor, fontSize: 20,fontWeight: FontWeight.bold),
+              );
+            }
+            else{
+              return const Text("My Profile",style: TextStyle(color: AppColors.whiteColor, fontSize: 20));
+            }
+          },
         ),
         centerTitle: true,
         flexibleSpace: ClipPath(
@@ -77,116 +92,122 @@ class ProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 100, left: 15, right: 15),
-          child: Form(
-            autovalidateMode: AutovalidateMode.always,
-            key: formKeys,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Name'),
-                SizedBox(
-                  height: 10,
-                ),
-                customTextFromField(
-                  hintText: 'Sajib HAsan',
-                  controller: _nameController,
-                  keyboardType: TextInputType.name,
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'Please enter the name';
-                    } else if (val.contains(RegExp(
-                        r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$"))) {
-                      return 'Enter a valid name';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text('Email'),
-                SizedBox(
-                  height: 10,
-                ),
-                customTextFromField(
-                  hintText: 'sajib@gmail.com',
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'Please enter the email';
-                    } else if (!val!.contains(RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+"))) {
-                      return 'enter a valid email address';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text('Mobile'),
-                SizedBox(
-                  height: 10,
-                ),
-                //customTextFromField(hintText: '01725202511', controller: _mobileNoController, keyboardType: TextInputType.number, validator: (val){}, ),
-                IntlPhoneField(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 9, horizontal: 10),
-                      border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text('Dete of Birth'),
-                SizedBox(
-                  height: 10,
-                ),
-                //  customTextFromField(hintText: '10,5,2000', controller: _dateofbirthController, keyboardType: TextInputType.number, validator: (val){},),
-                DateTimePicker(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 9, horizontal: 10),
-                      border: OutlineInputBorder()),
-                  // initialValue: DateTime.now().toString(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                  dateLabelText: 'Date',
-                  //onChanged: (val) => print(val),
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return "Enter the Date of Birth";
-                    }
+          child: BlocBuilder<MyProfileBloc,MyProfileState>(builder: (context, state) {
+            if(state is MyProfileSuccess){
+              _nameController.text = state.appUserModel.displayName != null ? state.appUserModel.displayName! : "";
+              _emailController.text = state.appUserModel.username!= null ?  state.appUserModel.username!: "";
+              _mobileNoController.text = state.appUserModel.mobile != null ? state.appUserModel.mobile! : "";
 
-                    return null;
-                  },
-                  // onSaved: (val) => print(val),
+             return Form(
+                autovalidateMode: AutovalidateMode.always,
+                key: formKeys,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Name'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    customTextFromField(
+                      hintText: 'Enter Your Name',
+                      controller: _nameController,
+                      keyboardType: TextInputType.name,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Please enter the name';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Email'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    customTextFromField(
+                      hintText: 'Enter Your Email',
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'Please enter the email';
+                        } else if (!val!.contains(RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+"))) {
+                          return 'enter a valid email address';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Mobile'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    IntlPhoneField(
+                      initialCountryCode: "BD",
+                      controller: _mobileNoController,
+                      decoration: InputDecoration(
+                          contentPadding:
+                          EdgeInsets.symmetric(vertical: 9, horizontal: 10),
+                          border: OutlineInputBorder()),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Text('Dete of Birth'),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // DateTimePicker(
+                    //   decoration: InputDecoration(
+                    //       contentPadding:
+                    //       EdgeInsets.symmetric(vertical: 9, horizontal: 10),
+                    //       border: OutlineInputBorder()),
+                    //   // initialValue: DateTime.now().toString(),
+                    //   firstDate: DateTime(2000),
+                    //   lastDate: DateTime(2100),
+                    //   dateLabelText: 'Date',
+                    //   //onChanged: (val) => print(val),
+                    //   validator: (val) {
+                    //     if (val == null || val.isEmpty) {
+                    //       return "Enter the Date of Birth";
+                    //     }
+                    //
+                    //     return null;
+                    //   },
+                    //   // onSaved: (val) => print(val),
+                    // ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    //
+                    // customButton(
+                    //     isCornerRadius: true,
+                    //     onPressed: () {
+                    //       if (formKeys.currentState!.validate()) {
+                    //         print('Success');
+                    //       } else {
+                    //         print('failed');
+                    //       }
+                    //     },
+                    //     text: 'Next'),
+                  ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                customButton(
-                    onPressed: () {
-                      if (formKeys.currentState!.validate()) {
-                        print('Success');
-                      } else {
-                        print('failed');
-                      }
-                    },
-                    text: 'Next'),
-                ElevatedButton(
-                    onPressed: (){
-                      logOut();
-                      print('Log out success');
-                      Navigator.of(context).popAndPushNamed("/");
-                    },
-                    child: Text("Log out"))
-              ],
-            ),
-          ),
+              );
+            }
+            if(state is MyProfileError){
+              return Center();
+            }
+            else{
+              return Center();
+            }
+          },)
         ),
       ),
     );

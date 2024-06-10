@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:blood_bank_app/base/base_response_model.dart';
 import 'package:blood_bank_app/base/base_service.dart';
 import 'package:blood_bank_app/data/models/app_user_response_model.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
@@ -22,12 +25,6 @@ class AppUserService extends BaseService<AppUserResponseModel>{
   }
 
   @override
-  Future<AppUserResponseModel> getDataById(int id) {
-    // TODO: implement getDataById
-    throw UnimplementedError();
-  }
-
-  @override
   Future<AppUserResponseModel> insertData(Object obj) async {
     try{
       AppUserResponseModel appUserRes = AppUserResponseModel.fromJson( await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken()));
@@ -43,9 +40,26 @@ class AppUserService extends BaseService<AppUserResponseModel>{
     throw UnimplementedError();
   }
   @override
-  Future<AppUserResponseModel> deleteData(Object obj) {
-    // TODO: implement deleteData
-    throw UnimplementedError();
+  Future<AppUserResponseModel> deleteData(Object obj) async{
+    try{
+      await baseApiService.delete(endpoint: apiEndPoint, data: obj,token: await getAuthToken());
+      return AppUserResponseModel();
+    }catch(e){
+      throw HttpException(e.toString());
+    }
+  }
+
+
+  @override
+  Future<BaseApiResponseModel> getDataById(String authToken) async {
+    try{
+      BaseApiResponseModel baseApiResponseModel =  BaseApiResponseModel<AppUserModel>.fromJson(await baseApiService.get(endpoint:apiEndPoint+"/my-profile",token: authToken), (json) => AppUserModel.fromJson(json as Map<String, dynamic>));
+      return baseApiResponseModel;
+    }
+    catch(e){
+      print(e.toString());
+      throw HttpException(e.toString());
+    }
   }
 
 }

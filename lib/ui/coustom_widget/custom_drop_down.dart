@@ -65,6 +65,4 @@ class _DropdownMenuExampleState extends State<CustomDropdownMenu> {
   }
 }
 
-// map<DropdownMenuEntry<String>>((String value) {
-// return DropdownMenuEntry<String>(value: value, label: value);
-// }).toList(),
+

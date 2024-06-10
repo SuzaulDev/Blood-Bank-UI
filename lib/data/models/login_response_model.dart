@@ -32,11 +32,13 @@ class LogInResponseModel {
 class Data {
   String? accessToken;
   int? userTypeId;
+  String? userTypeName;
   int? loginTime;
   int? loginExpierDuration;
 
   Data(
       {this.accessToken,
+        this.userTypeName,
         this.userTypeId,
         this.loginTime,
         this.loginExpierDuration});
@@ -44,6 +46,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];
     userTypeId = json['userTypeId'];
+    userTypeName = json['userTypeName'];
     loginTime = json['loginTime'];
     loginExpierDuration = json['loginExpierDuration'];
   }
@@ -52,6 +55,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['accessToken'] = this.accessToken;
     data['userTypeId'] = this.userTypeId;
+    data['userTypeName'] = this.userTypeName;
     data['loginTime'] = this.loginTime;
     data['loginExpierDuration'] = this.loginExpierDuration;
     return data;

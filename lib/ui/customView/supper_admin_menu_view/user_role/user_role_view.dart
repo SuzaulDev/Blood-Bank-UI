@@ -22,22 +22,39 @@ class _UserRoleViewState extends State<UserRoleView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Column(
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: widget.userRoleList.isNotEmpty ? _buildPanel():const Center(child: Text("No Data Found")),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.redColor,
+        elevation: 10,
+        tooltip: "Add New User Role",
+        onPressed: (){
+          showModalBottomSheet(
+            barrierColor: Colors.transparent,
+            isDismissible: false,
+            showDragHandle: true,
+            enableDrag: true,
+            backgroundColor: Colors.white,
+            context: context,
+            builder: (context) =>
+              UserRoleBottomSheet( menuItemList: widget.menuItemList, titelText: "User Role"),);
+        },
+        label: const Row(
           children: [
-            TextButton(
-              onPressed: () {
-                showBottomSheet(context: context, builder: (context) =>
-                    UserRoleBottomSheet( menuItemList: widget.menuItemList, titelText: "User Role"),);
-              },
-              child: Text("Add New"),
-            ),
-           Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: widget.userRoleList.isNotEmpty ? _buildPanel():const Center(child: Text("No Data Found")),
-            ),
+            Icon(Icons.add,color: Colors.white,),
+            Text("Add New",style: TextStyle(color: Colors.white),),
           ],
         ),
       ),
@@ -96,7 +113,7 @@ class _UserRoleViewState extends State<UserRoleView> {
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Name",
+                            "Menu Name",
                             style: TextStyle(color: Colors.white),
                           ),
                         )),
@@ -104,7 +121,7 @@ class _UserRoleViewState extends State<UserRoleView> {
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Status",
+                            "Menu Name Bangla",
                             style: TextStyle(color: Colors.white),
                           ),
                         )),
@@ -137,7 +154,7 @@ class _UserRoleViewState extends State<UserRoleView> {
                           ),
                           Center(
                             child: Text(
-                              student.value.active.toString(),
+                              student.value.banglaName.toString(),
                             ),
                           ),
                           Center(

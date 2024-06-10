@@ -23,19 +23,36 @@ class UserRoleAssignView extends StatefulWidget {
 class _UserRoleAssignViewState extends State<UserRoleAssignView> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Column(
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              widget.userRoleAssignList.isNotEmpty ?_buildPanel(): Center(child: Text("No Data Found")),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.redColor,
+        elevation: 10,
+        tooltip: "Assign Role to user",
+        onPressed: (){
+          showModalBottomSheet(
+            barrierColor: Colors.transparent,
+            isDismissible: false,
+            showDragHandle: true,
+            enableDrag: true,
+            backgroundColor: Colors.white,
+            context: context,
+            builder: (context) =>
+                UserRoleAssignBottomSheet(appUserModel:widget.appUserModelList,userRoleModel: widget.userRoleModelList, titelText: "User Role Assign"),);
+        },
+        label: const Row(
           children: [
-            TextButton(
-              onPressed: () {
-                showBottomSheet(context: context, builder: (context) =>
-                    UserRoleAssignBottomSheet(appUserModel:widget.appUserModelList,userRoleModel: widget.userRoleModelList, titelText: "User Role Assign"),);
-              },
-              child: Text("Add New"),
-            ),
-            widget.userRoleAssignList.isNotEmpty ?_buildPanel(): Center(child: Text("No Data Found")),
+            Icon(Icons.add,color: Colors.white,),
+            Text("Assign",style: TextStyle(color: Colors.white),),
           ],
         ),
       ),
@@ -59,6 +76,7 @@ class _UserRoleAssignViewState extends State<UserRoleAssignView> {
             return ListTile(
               leading: Text(item.master!.appUserId.toString()),
               title: Text(item.master!.appUserName.toString()),
+              subtitle: Text(item.detailsList!.first.userRoleName.toString()),
               trailing:  SizedBox(
                 width: 120,
                 child: Center(
@@ -116,15 +134,7 @@ class _UserRoleAssignViewState extends State<UserRoleAssignView> {
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "Name",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )),
-                    Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Status",
+                            "Role Name",
                             style: TextStyle(color: Colors.white),
                           ),
                         )),
@@ -144,14 +154,10 @@ class _UserRoleAssignViewState extends State<UserRoleAssignView> {
                           ),
                           Center(
                             child: Text(
-                              '${student.value.userRoleId}',
+                              '${student.value.userRoleName}',
                             ),
                           ),
-                          Center(
-                            child: Text(
-                              student.value.userRoleName.toString(),
-                            ),
-                          ),
+
                         ]);
                   },
                 ),

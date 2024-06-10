@@ -50,7 +50,7 @@ class UserRoleAssignService extends BaseService<UserRoleAssignResponseModel>{
   }
 
   @override
-  Future<UserRoleAssignResponseModel> getDataById(int id) {
+  Future<BaseApiResponseModel> getDataById(String authToken) {
     // TODO: implement getDataById
     throw UnimplementedError();
   }

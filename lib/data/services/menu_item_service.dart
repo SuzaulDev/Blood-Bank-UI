@@ -5,6 +5,7 @@ import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 
 import '../../base/base_api_service.dart';
+import '../../base/base_response_model.dart';
 
 class MenuItemService extends BaseService<MenuItemResponseModel> {
   final apiEndPoint;
@@ -57,7 +58,7 @@ class MenuItemService extends BaseService<MenuItemResponseModel> {
   }
 
   @override
-  Future<MenuItemResponseModel> getDataById(int id) {
+  Future<BaseApiResponseModel> getDataById(String authToken) {
     // TODO: implement getDataById
     throw UnimplementedError();
   }

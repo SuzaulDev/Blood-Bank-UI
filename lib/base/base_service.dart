@@ -1,8 +1,11 @@
- abstract class BaseService<M>{
+ import 'package:blood_bank_app/base/base_response_model.dart';
+
+abstract class BaseService<M>{
  Future<M> insertData(Object obj);
  Future<M> updateData(Object obj);
  Future<M> deleteData(Object obj);
  Future<M> getAllData();
- Future<M> getDataById(int id);
+
+ Future<BaseApiResponseModel> getDataById(String authToken);
 
 }

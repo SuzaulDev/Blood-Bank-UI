@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class BaseApiService {
-  final String baseURL = "http://192.168.165.45:8080/";
+  final String baseURL = "http://172.208.31.248:8080/";
 
   Future<Map<String, String>> getHeaders({authToken}) async {
     // Implement logic to get authentication headers or other required headers
@@ -32,6 +32,15 @@ class BaseApiService {
   Future<dynamic> post(
       {required String endpoint, required dynamic data, token}) async {
     final response = await http.post(
+      Uri.parse('$baseURL$endpoint'),
+      headers: await getHeaders(authToken: token),
+      body: json.encode(data),
+    );
+    return _handlePostResponse(response);
+  }
+  Future<dynamic> put(
+      {required String endpoint, required dynamic data, token}) async {
+    final response = await http.put(
       Uri.parse('$baseURL$endpoint'),
       headers: await getHeaders(authToken: token),
       body: json.encode(data),

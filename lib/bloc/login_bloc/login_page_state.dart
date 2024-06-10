@@ -25,6 +25,7 @@ class LoginSuccess extends LoginPageState{
   List<Object?> get props => [logInResponseModel];
 }
 
+
 class LoginPageError extends LoginPageState{
   final error;
   LoginPageError({required this.error});

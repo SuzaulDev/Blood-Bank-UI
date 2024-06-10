@@ -46,6 +46,12 @@ dependencies:
   flutter_bloc:
   equatable:
   http:
+  geolocator:
+  google_maps_flutter:
+  permission_handler:
+  syncfusion_flutter_charts:
+
+
 
 
 

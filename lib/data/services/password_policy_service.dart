@@ -2,6 +2,7 @@ import 'package:blood_bank_app/base/base_service.dart';
 import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
 
 import '../../base/base_api_service.dart';
+import '../../base/base_response_model.dart';
 import '../../utils/helper_funtion.dart';
 
 class PasswordPolicyService extends BaseService<PasswordPolicyResponseModel>{
@@ -26,7 +27,7 @@ class PasswordPolicyService extends BaseService<PasswordPolicyResponseModel>{
   }
 
   @override
-  Future<PasswordPolicyResponseModel> getDataById(int id) {
+  Future<BaseApiResponseModel> getDataById(String authToken) {
     // TODO: implement getDataById
     throw UnimplementedError();
   }

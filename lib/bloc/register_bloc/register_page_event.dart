@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../data/models/register_request_model.dart';
+
 abstract class RegisterPageEvent extends Equatable{}
 
 class LoadRegisterPage extends RegisterPageEvent{
@@ -8,10 +10,8 @@ class LoadRegisterPage extends RegisterPageEvent{
   List<Object?> get props => [];
 }
 class RegisterOnClick extends RegisterPageEvent{
-  final String displayName;
-  final String username;
-  final String password;
-  RegisterOnClick({required this.displayName, required this.username,required this.password});
+  RegisterRequestModel registerRequestModel;
+  RegisterOnClick({required this.registerRequestModel});
 
   @override
   // TODO: implement props

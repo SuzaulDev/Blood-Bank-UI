@@ -154,6 +154,7 @@ class _MenuItemBottomSheetState extends State<AppUserBottomSheet> {
                       appUserModel.username = _userNameController.text;
                       appUserModel.password = _passwordController.text;
                       appUserModel.active = isActive;
+                      appUserModel.userTypeName = "ADMIN";
 
                       //add event ............
                       context.read<HomePageBloc>().add(AddNewUser(appUserModel:appUserModel));

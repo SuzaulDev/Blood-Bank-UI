@@ -37,81 +37,77 @@ class _UserRoleASsignBottomSheet extends State<UserRoleAssignBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomSheet(
-      onClosing: () {},
-      enableDrag: false,
-      builder: (context) => Container(
-        height: 400,
-        child: ListView(
-          children: [
-            ListTile(
-              title: Center(child: Text(widget.titelText)),
-              trailing: IconButton(
-                  onPressed: () {
+    return Container(
+      height: 250,
+      child: ListView(
+        children: [
+          ListTile(
+            title: Center(child: Text(widget.titelText)),
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  CupertinoIcons.clear_circled_solid,
+                  color: Colors.red,
+                )),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: CustomDropdownMenu(
+                  dropDownList: widget.appUserModel,
+                  controller: _appUserController,
+                  hintText: "App User",
+                  isRequired: true,
+                  selectedValue: (selectedValue){
+                    _selectedValueForAppUser = selectedValue;
+                  },
+                ),
+              ),
+
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: CustomUserRoleModelDropdownMenu(
+                  dropDownList: widget.userRoleModel,
+                  controller: _userRoleController,
+                  hintText: "User Role",
+                  isRequired: true,
+                  selectedValue: (selectedValue){
+                    _selectedValueForUserRole = selectedValue;
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: customSaveButton(
+                  icon: Icons.save,
+                  titel: "SAVE",
+                  btnColor: AppColors.redColor,
+                  onClick: () {
+                    //add event ............
+                    context.read<HomePageBloc>().add(SetUserRole(userRoleAssignModel: _generateRequestModel() ));
+
+                    //pop bottomsheet................
                     Navigator.pop(context);
                   },
-                  icon: const Icon(
-                    CupertinoIcons.clear_circled_solid,
-                    color: Colors.red,
-                  )),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: CustomDropdownMenu(
-                    dropDownList: widget.appUserModel,
-                    controller: _appUserController,
-                    hintText: "App User",
-                    isRequired: true,
-                    selectedValue: (selectedValue){
-                      _selectedValueForAppUser = selectedValue;
-                    },
-                  ),
                 ),
-
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: CustomUserRoleModelDropdownMenu(
-                    dropDownList: widget.userRoleModel,
-                    controller: _userRoleController,
-                    hintText: "User Role",
-                    isRequired: true,
-                    selectedValue: (selectedValue){
-                      _selectedValueForUserRole = selectedValue;
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: customSaveButton(
-                    icon: Icons.save,
-                    titel: "SAVE",
-                    btnColor: AppColors.redColor,
-                    onClick: () {
-                      //add event ............
-                      context.read<HomePageBloc>().add(SetUserRole(userRoleAssignModel: _generateRequestModel() ));
-
-                      //pop bottomsheet................
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

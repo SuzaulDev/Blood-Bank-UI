@@ -13,12 +13,13 @@ class DrawerLoading extends DrawerState{
   List<Object?> get props => [];
 }
 class DrawerSuccess extends DrawerState{
-  final userIdType;
+  final userTypeId;
+  final UserTypeName;
   final List<MenuItemModel> menuItemList;
-  DrawerSuccess({required this.userIdType,required this.menuItemList});
+  DrawerSuccess({this.UserTypeName,required this.userTypeId,required this.menuItemList,});
   @override
   // TODO: implement props
-  List<Object?> get props => [userIdType,menuItemList];
+  List<Object?> get props => [userTypeId,menuItemList];
 
 }
 

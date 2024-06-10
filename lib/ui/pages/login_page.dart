@@ -2,6 +2,7 @@ import 'package:blood_bank_app/bloc/login_bloc/login_page_bloc.dart';
 import 'package:blood_bank_app/bloc/login_bloc/login_page_event.dart';
 import 'package:blood_bank_app/bloc/login_bloc/login_page_state.dart';
 import 'package:blood_bank_app/data/models/login_request_model.dart';
+import 'package:blood_bank_app/ui/coustom_widget/alert_dialog.dart';
 import 'package:blood_bank_app/ui/pages/login_page%20(2).dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,18 +27,13 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final hight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final hight = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
+            foregroundColor: Colors.white,
             backgroundColor: AppColors.redColor,
             centerTitle: true,
             title: Text(
@@ -166,8 +162,16 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                       BlocListener<LoginPageBloc, LoginPageState>(
                         listener: (context, state) {
-                          if (state is LoginSuccess) {
+                          if (state is LoginSuccess && state.logInResponseModel.status!) {
                             Navigator.of(context).popAndPushNamed("/");
+                            showLoginSuccessDialog(context);
+                          }
+                          if(state is LoginSuccess && !state.logInResponseModel.status!){
+                            showLoginFailedDialog(context: context,msg: state.logInResponseModel.message!);
+                          }
+                          if(state is LoginPageError){
+
+                            print("something");
                           }
                         },
                         child: login_customButton(
@@ -180,8 +184,6 @@ class _LogInPageState extends State<LogInPage> {
                                   username: _emailController.text,
                                   password: _passwordController.text);
                               context.read<LoginPageBloc>().add(LoginOnClick(loginRequestModel: model));
-                            } else {
-                              print('Faild');
                             }
                           },
                         ),

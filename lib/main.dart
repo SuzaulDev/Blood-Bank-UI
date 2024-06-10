@@ -1,8 +1,8 @@
 import 'package:blood_bank_app/bloc/drawer_bloc/drawer_bloc.dart';
 import 'package:blood_bank_app/bloc/login_bloc/login_page_bloc.dart';
+import 'package:blood_bank_app/bloc/my_profile_bloc/my_profile_bloc.dart';
 import 'package:blood_bank_app/bloc/register_bloc/register_page_bloc.dart';
 import 'package:blood_bank_app/ui/pages/blood_group.dart';
-import 'package:blood_bank_app/ui/pages/blood_type.dart';
 import 'package:blood_bank_app/ui/pages/forgot_page.dart';
 import 'package:blood_bank_app/ui/pages/home_page.dart';
 import 'package:blood_bank_app/ui/pages/login_page.dart';
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => HomePageBloc()),
           BlocProvider(create: (context) => LoginPageBloc(),),
           BlocProvider(create: (context) => RegisterPageBloc(),),
+          BlocProvider(create: (context) => MyProfileBloc(),),
           BlocProvider(create: (context) => DrawerBloc(),)
         ],
         child: MaterialApp(
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
             '/registerPage': (context) => RegisterPage(),
             '/forgotPage': (context) => ForgotPage(),
             '/profilePage': (context) => ProfilePage(),
-            '/bloodType': (context) => BloodType(),
             '/bloodGroup': (context) => BloodGroup(),
+            '/homePage': (context) => HomePage(),
           },
           title: 'Flutter Demo',
           theme: ThemeData(
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          home: const HomePage(),
         ));
   }
 }

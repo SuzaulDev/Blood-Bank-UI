@@ -20,32 +20,16 @@ class AuthService {
       throw Exception(error);
     }
   }
-  // Future<LogInResponseModel> userRegistration({
-  //   required String displayName,required String username,required String password})
-  // async{
-  //   try{
-  //     var url = Uri.parse("${localUrl}api/auth/signup");
-  //     final response = await http.post(url,
-  //       headers:<String, String> {
-  //         'Content-Type': 'application/json; charset=UTF-8'
-  //       } ,
-  //       body: json.encode(<String, String>{
-  //         'displayName': displayName,
-  //         'username': username,
-  //         'password': password
-  //       }),
-  //     );
-  //     if(response.statusCode == 200){
-  //       rData = LogInResponseModel.fromJson( json.decode(response.body) as Map<String,dynamic> );
-  //     }
-  //     else{
-  //       throw Exception();
-  //     }
-  //   }
-  //   catch(error){
-  //
-  //   }
-  //   return  rData;
-  // }
+  Future<LogInResponseModel> userRegistration({required Object registrationModel})
+  async{
+    try{
+      final data = LogInResponseModel.fromJson(await baseApiService.post(endpoint: apiEndPoint, data: registrationModel) );
+      return data;
+    }
+    catch(error){
+      print(error.printError);
+      throw Exception(error);
+    }
+  }
 
 }

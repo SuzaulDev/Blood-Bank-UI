@@ -3,6 +3,7 @@ import 'package:blood_bank_app/data/models/user_role_response_model.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 
 import '../../base/base_api_service.dart';
+import '../../base/base_response_model.dart';
 
 class UserRoleService extends BaseService<UserRoleResponseModel>{
   final apiEndPoint ;
@@ -20,11 +21,7 @@ class UserRoleService extends BaseService<UserRoleResponseModel>{
     }
   }
 
-  @override
-  Future<UserRoleResponseModel> getDataById(int id) {
-    // TODO: implement getDataById
-    throw UnimplementedError();
-  }
+
 
   @override
   Future<UserRoleResponseModel> insertData(Object obj) async {
@@ -53,5 +50,11 @@ class UserRoleService extends BaseService<UserRoleResponseModel>{
       throw UnimplementedError(e.toString());
     }
 
+  }
+
+  @override
+  Future<BaseApiResponseModel> getDataById(String authToken) {
+    // TODO: implement getDataById
+    throw UnimplementedError();
   }
 }

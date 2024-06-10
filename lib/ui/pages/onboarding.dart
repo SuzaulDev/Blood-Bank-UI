@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utils/const/app_colors.dart';
 
 class Onboarding extends StatelessWidget {
@@ -12,7 +10,7 @@ class Onboarding extends StatelessWidget {
     return Scaffold(
       body: OnBoardingSlider(
         onFinish: () {
-          Navigator.pushNamed(context, '/loginPage');
+          Navigator.pushNamed(context, '/homePage');
         },
         finishButtonText: 'Let\'s Begin',
         finishButtonStyle: FinishButtonStyle(
@@ -21,7 +19,7 @@ class Onboarding extends StatelessWidget {
         skipTextButton: Text(
           'Skip',
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 16,
             color: AppColors.redColor,
             fontWeight: FontWeight.w600,
           ),
@@ -31,17 +29,17 @@ class Onboarding extends StatelessWidget {
         background: [
           Image.asset(
             'images/dr.jpg',
-            height: 350.h,
+            height: 350,
             fit: BoxFit.cover,
           ),
           Image.asset(
             'images/dr.jpg',
-            height: 350.h,
+            height: 350,
             fit: BoxFit.cover,
           ),
           Image.asset(
             'images/dr.jpg',
-            height: 350.h,
+            height: 350,
             fit: BoxFit.cover,
           ),
         ],
@@ -51,7 +49,7 @@ class Onboarding extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 450.h,
+                height: 450,
               ),
               Text(
                 'Donated 1',
@@ -62,7 +60,7 @@ class Onboarding extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               const Text(
                 'Dramatically unfeish Outing vortices\nbefore maintained pations.',
@@ -79,7 +77,7 @@ class Onboarding extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 450.h,
+                height: 450,
               ),
               Text(
                 'Donated 2',
@@ -91,14 +89,14 @@ class Onboarding extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               Text(
                 'Dramatically unfeish Outing vortices\nbefore maintained pations.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
-                  fontSize: 18.sp,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -108,26 +106,26 @@ class Onboarding extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 450.h,
+                height: 450,
               ),
               Text(
                 'Donated 3',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.red,
-                  fontSize: 24.sp,
+                  fontSize: 24,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               Text(
                 'Dramatically unfeish Outing vortices\nbefore maintained pations.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
-                  fontSize: 18.sp,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),

@@ -1,7 +1,10 @@
+import 'package:blood_bank_app/base/base_response_model.dart';
 import 'package:blood_bank_app/data/models/app_user_response_model.dart';
+import 'package:blood_bank_app/data/models/blood_donor_response_model.dart';
 import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/data/models/user_role_response_model.dart';
 import 'package:equatable/equatable.dart';
+import '../../data/models/blood_request_response_model.dart';
 import '../../data/models/password_policy_response_model.dart';
 import '../../data/models/user_role_assign_model.dart';
 import '../../data/models/users_models.dart';
@@ -24,20 +27,21 @@ class HomePageLoading extends HomePageState {
 }
 
 class HomePageLoaded extends HomePageState {
-  final List<UserModel> userModelList;
   final String authToken;
   final int userTypeId;
-  final MenuItemResponseModel menuItemResponse;
+  final BloodDonorResponseModel bloodDonorResponseModel;
+  final List<BloodRequestModel> bloodRequestModelList;
 
   HomePageLoaded(
-      {required this.userModelList,
-      required this.authToken,
-      required this.userTypeId,
-      required this.menuItemResponse});
+      { required this.authToken,
+        required this.userTypeId,
+        required this.bloodDonorResponseModel,
+        required this.bloodRequestModelList,
+      });
 
   @override
   // TODO: implement props
-  List<Object?> get props => [userModelList, authToken];
+  List<Object?> get props => [ authToken,userTypeId,bloodDonorResponseModel,bloodRequestModelList];
 }
 
 class ApplicationUser extends HomePageState {
@@ -67,10 +71,6 @@ class UserRoleAssign extends HomePageState {
   final AppUserResponseModel appUserResponseModel;
   final UserRoleResponseModel userRoleResponseModel;
   final UserRoleAssignResponseModel userRoleAssignResponseModel;
-
-  ///need to be uncomment and create model class
-  //final UserRoleAssignResponseModel userRoleAssignResponseModel;
-
   UserRoleAssign({
     required this.appUserResponseModel,
     required this.userRoleResponseModel,
@@ -110,4 +110,59 @@ class HomePageError extends HomePageState {
   @override
   // TODO: implement props
   List<Object?> get props => [errorMessage];
+}
+
+class FeedPage extends HomePageState{
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+
+}
+class NearByDonor extends HomePageState{
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+class BloodRequest extends HomePageState{
+  final BloodDonorResponseModel bloodDonorResponseModel;
+  final List<String> cityList;
+  final searchedValue;
+  BloodRequest({required this.bloodDonorResponseModel,required this.cityList,this.searchedValue});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [bloodDonorResponseModel,cityList];
+}
+class AddDonor extends HomePageState{
+  final PasswordPolicyResponseModel passwordPolicyResponse;
+  final BloodDonorResponseModel;
+  AddDonor({this.BloodDonorResponseModel,required this.passwordPolicyResponse});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [BloodDonorResponseModel];
+}
+
+class ViewBloodRequest extends HomePageState{
+  final List<BloodRequestModel> bloodRequestList;
+
+  ViewBloodRequest({required this.bloodRequestList});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [bloodRequestList];
+
+}
+class MyBloodRequest extends HomePageState{
+  final List<BloodRequestModel> receiverBloodRequest;
+  MyBloodRequest({required this.receiverBloodRequest});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [receiverBloodRequest];
+}
+
+class ProcessingBloodRequest extends HomePageState{
+  final BloodRequestResponseModel bloodRequestResponseModel;
+  ProcessingBloodRequest({required this.bloodRequestResponseModel});
+  @override
+  // TODO: implement props
+  List<Object?> get props => [bloodRequestResponseModel];
 }

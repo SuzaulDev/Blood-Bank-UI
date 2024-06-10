@@ -7,17 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/helper_funtion.dart';
 
 class DrawerBloc extends Bloc<DrawerEvent, DrawerState> {
-  MenuItemService menuItemService = MenuItemService(
-      apiEndPoint: "api/privet/sya/menu-item/menu-by-app-user-id");
+  MenuItemService menuItemService = MenuItemService(apiEndPoint: "api/privet/sya/menu-item/menu-by-app-user-id");
   DrawerBloc() : super(DrawerInitial()) {
     on<LoadDrawer>((event, emit) async {
       emit(DrawerLoading());
       int userTypeId = await getUserTypeId();
+      String userTypeName = await getUserTypeName();
       MenuItemResponseModel model = await menuItemService.getUserMenu();
       if (model.status == true) {
-        emit(DrawerSuccess(userIdType: userTypeId, menuItemList: model.data!));
+        emit(DrawerSuccess(UserTypeName: userTypeName ,userTypeId: userTypeId, menuItemList: model.data!));
       } else {
-        emit(DrawerSuccess(userIdType: 4, menuItemList: []));
+        emit(DrawerSuccess(userTypeId: 4, menuItemList: []));
       }
     });
   }
