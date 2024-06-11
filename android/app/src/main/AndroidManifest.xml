@@ -7,7 +7,7 @@
 
     
     <application
-        android:label="blood_bank_app"
+        android:label="Red Love"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

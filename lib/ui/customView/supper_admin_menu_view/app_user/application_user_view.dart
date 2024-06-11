@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:blood_bank_app/data/models/app_user_response_model.dart';
 import 'package:blood_bank_app/data/models/menu_item_response_model.dart';
 import 'package:blood_bank_app/data/models/password_policy_response_model.dart';
+import 'package:blood_bank_app/ui/coustom_widget/status_widget.dart';
 import 'package:blood_bank_app/ui/customView/supper_admin_menu_view/app_user/application_user_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,9 +124,7 @@ class ApplicationUserView extends StatelessWidget {
                                 ),
                               ),
                               Center(
-                                child: Text(
-                                  student.value.active.toString(),
-                                ),
+                                child: student.value.active! ? StatusWidget(status: "ACTIVE") : StatusWidget(status: "INACTIVE"),
                               ),
                               Center(
                                 child: Wrap(

@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import '../../utils/const/app_colors.dart';
 
-class Onboarding extends StatelessWidget {
-  const Onboarding({super.key});
+class OnBoarding extends StatelessWidget {
+  const OnBoarding({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: OnBoardingSlider(
         onFinish: () {
-          Navigator.pushNamed(context, '/homePage');
+          Navigator.pushReplacementNamed(context, '/homePage');
         },
         finishButtonText: 'Let\'s Begin',
-        finishButtonStyle: FinishButtonStyle(
+        finishButtonStyle: const FinishButtonStyle(
           backgroundColor: AppColors.redColor,
         ),
-        skipTextButton: Text(
+        skipTextButton: const Text(
           'Skip',
           style: TextStyle(
             fontSize: 16,
@@ -44,7 +44,7 @@ class Onboarding extends StatelessWidget {
           ),
         ],
         speed: 1.8,
-        pageBodies: [
+        pageBodies: const [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -62,7 +62,7 @@ class Onboarding extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Dramatically unfeish Outing vortices\nbefore maintained pations.',
                 textAlign: TextAlign.center,
                 style: TextStyle(

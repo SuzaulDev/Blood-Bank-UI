@@ -15,8 +15,7 @@ class BloodRequestService extends BaseService<BloodRequestResponseModel>{
   @override
   Future<BloodRequestResponseModel> insertData(Object obj) async{
     try{
-     final rsModel =  await baseApiService.post(endpoint: apiEndpoint, data: obj,token: await getAuthToken());
-     print(rsModel);
+      await baseApiService.post(endpoint: apiEndpoint, data: obj,token: await getAuthToken());
       return BloodRequestResponseModel();
     }catch(e){
       print(e.toString());

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import '../../../utils/helper_funtion.dart';
 
 class NearByDonorScreen extends StatefulWidget {
   const NearByDonorScreen({super.key});
@@ -18,67 +19,29 @@ class _NearByDonorScreenState extends State<NearByDonorScreen> {
     Location(latitude: 23.8047, longitude: 90.7060),
   ];
   Set<Marker> markers = {};
-  bool _isLocationGranted = false;
-  late Position currentPosition;
 
 
   @override
   void initState() {
+    _setCurrentPosition().then((value)  => _setMarkers());
     super.initState();
-    _checkLocationPermission();
-    _setMarkers();
   }
 
 
-  Future<void> _checkLocationPermission() async {
-    var status = await Permission.location.status;
-    if (status.isDenied || status.isRestricted) {
-      // Request permission
-      status = await Permission.location.request();
-      if (status.isGranted) {
-        setState(() {
-          _isLocationGranted = true;
-        });
-      } else {
-        _showPermissionDeniedDialog();
-      }
-    } else {
-      setState(() {
-        _isLocationGranted = true;
-      });
-    }
+  Future<void> _setCurrentPosition()async{
+
   }
 
-  void _showPermissionDeniedDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Location Permission'),
-          content: Text('Location permission is required to use this feature. Please grant the permission.'),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Future<void> _setMarkers() async {
-     currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     print("this is my location: "+currentPosition.toString());
 
     double radius = 464163; // 5km in meters
 
     for (var location in locations) {
       double distance = Geolocator.distanceBetween(
-        currentPosition.latitude,
-        currentPosition.longitude,
+        currentPosition!.latitude,
+        currentPosition!.longitude,
         location.latitude,
         location.longitude,
       );
@@ -101,12 +64,12 @@ class _NearByDonorScreenState extends State<NearByDonorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:_isLocationGranted ? GoogleMap(
+      body: isLocationGranted ? GoogleMap(
         onMapCreated: (controller) {
           _controller = controller;
         },
         initialCameraPosition: CameraPosition(
-          target: LatLng(currentPosition.latitude, currentPosition.longitude),
+          target: LatLng(currentPosition!.latitude , currentPosition!.longitude),
           zoom: 15,
         ),
         markers: markers,

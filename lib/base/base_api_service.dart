@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class BaseApiService {
-  final String baseURL = "http://172.208.31.248:8080/";
+  final String baseURL = "http://48.217.146.162:8080/";
+ // final String baseURL = "http://localhost:8080/";
 
   Future<Map<String, String>> getHeaders({authToken}) async {
     // Implement logic to get authentication headers or other required headers

@@ -31,6 +31,14 @@ class StatusWidget extends StatelessWidget {
         bgColor = Colors.red;
         text = 'REJECTED';
         break;
+      case 'ACTIVE':
+        bgColor = Colors.green;
+        text = 'ACTIVE';
+        break;
+      case 'INACTIVE':
+        bgColor = Colors.red;
+        text = 'INACTIVE';
+        break;
       default:
         bgColor = Colors.grey;
         text = 'UNKNOWN';

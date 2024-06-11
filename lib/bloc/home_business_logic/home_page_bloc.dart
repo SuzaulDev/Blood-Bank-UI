@@ -49,6 +49,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       switch (event.menuUrl) {
         case "dashboard":
+          emit(HomePageLoading());
           await getBloodGroupData();
           emit(
             HomePageLoaded(
@@ -59,6 +60,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             ),
           );
         case "app-user":
+          emit(HomePageLoading());
           emit(
             ApplicationUser(
               passwordPolicyResponse: await policyService.getAllData(),
@@ -67,11 +69,13 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           );
           break;
         case "user-role":
+          emit(HomePageLoading());
           emit(UserRole(
               responseModel: await userRoleService.getAllData(),
               menuItemResponseModel: await menuItemService.getAllData()));
           break;
         case "user-role-assign":
+          emit(HomePageLoading());
           emit(UserRoleAssign(
             appUserResponseModel: await appUserService.getAllData(),
             userRoleResponseModel: await userRoleService.getAllData(),
@@ -80,30 +84,41 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           ));
           break;
         case "password-policy":
+          emit(HomePageLoading());
           emit(PasswordPolicy(
             passwordPolicyResponse: await policyService.getAllData(),
           ));
           break;
         case "menu-item":
+          emit(HomePageLoading());
           emit(MenuItem(menuItemResponse: await menuItemService.getAllData()));
           break;
         case "blood-request":
+          emit(HomePageLoading());
           emit(BloodRequest(
             bloodDonorResponseModel: await bloodDonorService.getAllData(),
             cityList: district,
           ),
           );
           break;
+        case "about":
+          emit(HomePageLoading());
+          emit(About());
+          break;
         case "add-donor":
+          emit(HomePageLoading());
           emit(AddDonor(BloodDonorResponseModel:await bloodDonorService.getAllData(),passwordPolicyResponse: await policyService.getAllData() ));
           break;
         case "view-request":
+          emit(HomePageLoading());
           emit(ViewBloodRequest(bloodRequestList: await bloodRequestService.getDonorBloodRequest()));
           break;
         case "my-blood-request":
+          emit(HomePageLoading());
           emit(MyBloodRequest(receiverBloodRequest: await getAuthToken() != "null" ? await bloodRequestService.getReceiverBloodRequest() : []));
           break;
         case "blood-request-process":
+          emit(HomePageLoading());
           emit(ProcessingBloodRequest(bloodRequestResponseModel: await bloodRequestService.getAllData()));
           break;
       }
@@ -126,10 +141,12 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
 
     on<AddNewUser>((event, emit) async {
-      AppUserResponseModel model = await appUserService.insertData(event.appUserModel);
-      emit(ApplicationUser(
-          passwordPolicyResponse: await policyService.getAllData(),
-          appUserResponse: await appUserService.getAllData()));
+       await appUserService.insertData(event.appUserModel).then((value) async =>
+           emit(ApplicationUser(
+               passwordPolicyResponse: await policyService.getAllData(),
+               appUserResponse: await appUserService.getAllData())),
+       );
+
     });
     on<DeleteUser>((event, emit) async{
       await appUserService.deleteData(event.appUserModel).then((value) async =>
@@ -240,6 +257,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<ControlBottomNavigation>((event, emit) async{
       switch (event.indexNumber) {
         case 0:
+          emit(HomePageLoading());
           await getBloodGroupData();
           emit(HomePageLoaded(
             authToken: await getAuthToken(),

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/login_response_model.dart';
 import 'const/AppConstant.dart';
@@ -8,6 +11,8 @@ String getFormattedDate(DateTime dateTime, String pattern) {
 }
 
 String globalAuthToken = "";
+bool isLocationGranted = false;
+Position? currentPosition;
 
 /// for set authtoken after login
 void setLoginDetails({required LogInResponseModel loginResponseModel}) async {
@@ -71,6 +76,45 @@ String formatDateTime({required String format,required DateTime dateTime}) {
 String formatCustomDate(DateTime date, String pattern) {
   final DateFormat formatter = DateFormat(pattern);
   return formatter.format(date);
+}
+
+/// for location permission
+Future<void> checkLocationPermission(BuildContext context) async {
+  currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  print("this is my location: "+currentPosition.toString());
+  var status = await Permission.location.status;
+  if (status.isDenied || status.isRestricted) {
+    // Request permission
+    status = await Permission.location.request();
+    if (status.isGranted) {
+        isLocationGranted = true;
+        currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    } else {
+      _showPermissionDeniedDialog(context: context);
+    }
+  } else {
+      isLocationGranted = true;
+  }
+}
+
+void _showPermissionDeniedDialog({required BuildContext context}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Location Permission'),
+        content: Text('Location permission is required to use this feature. Please grant the permission.'),
+        actions: [
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 void logOut() async {

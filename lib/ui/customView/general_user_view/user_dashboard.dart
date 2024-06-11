@@ -1,12 +1,9 @@
-import 'package:blood_bank_app/bloc/home_business_logic/home_page_bloc.dart';
-import 'package:blood_bank_app/bloc/home_business_logic/home_page_state.dart';
 import 'package:blood_bank_app/data/models/blood_donor_response_model.dart';
 import 'package:blood_bank_app/ui/coustom_widget/custom_responsive_card.dart';
 import 'package:blood_bank_app/utils/constant_value.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../data/models/blood_request_response_model.dart';
@@ -61,7 +58,7 @@ class UserDashBoard extends StatelessWidget {
                     CircularChartAnnotation(
                       widget:  Text( bloodGroupTypeList[index].name,
                         style: TextStyle(
-                          fontSize: screenWidth < 600 ? 40 : 30,
+                          fontSize: screenWidth < 600 ? 35 : 40,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -76,9 +73,9 @@ class UserDashBoard extends StatelessWidget {
                       trackColor: CupertinoColors.systemYellow,
                       xValueMapper: (data, _) => data.name,
                       yValueMapper: (data, _) => data.amount,
-                      maximumValue: 10,
-                      radius: '70%',
-                      innerRadius: '80%',
+                      maximumValue: 50,
+                      radius: screenWidth < 600 ? '100%' : '70%',
+                      innerRadius: screenWidth < 600 ? '85%' :'80%',
                       cornerStyle: CornerStyle.bothCurve,
                       gap: '10%',
                       dataLabelSettings: DataLabelSettings(

@@ -27,10 +27,11 @@ class AppUserService extends BaseService<AppUserResponseModel>{
   @override
   Future<AppUserResponseModel> insertData(Object obj) async {
     try{
-      AppUserResponseModel appUserRes = AppUserResponseModel.fromJson( await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken()));
-      return appUserRes;
+      await baseApiService.post(endpoint: apiEndPoint, data: obj,token: await getAuthToken());
+      return AppUserResponseModel();
     }catch(e){
-      throw UnimplementedError();
+      print(e);
+      throw HttpException(e.toString());
     }
   }
 

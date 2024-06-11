@@ -141,6 +141,12 @@ class AddDonor extends HomePageState{
   List<Object?> get props => [BloodDonorResponseModel];
 }
 
+class About extends HomePageState{
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
 class ViewBloodRequest extends HomePageState{
   final List<BloodRequestModel> bloodRequestList;
 

@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/home_business_logic/home_page_bloc.dart';
 import '../../bloc/home_business_logic/home_page_event.dart';
+import '../../utils/helper_funtion.dart';
 
 
 
@@ -20,7 +21,7 @@ class HomePage extends StatelessWidget {
     context.read<HomePageBloc>().add(LoadHomePage());
     context.read<DrawerBloc>().add(LoadDrawer());
     final screenWidth = MediaQuery.of(context).size.width;
-    print(screenWidth);
+    checkLocationPermission(context); //for location
     return LayoutBuilder(builder: (context, constraints) {
       if (screenWidth < 600) {
         return MobileLayout();

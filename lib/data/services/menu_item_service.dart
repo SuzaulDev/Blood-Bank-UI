@@ -15,12 +15,8 @@ class MenuItemService extends BaseService<MenuItemResponseModel> {
   @override
   Future<MenuItemResponseModel> insertData(Object obj) async {
     try {
-      MenuItemModel itemModel = MenuItemModel.fromJson(await baseApiService
-          .post(endpoint: apiEndPoint, data: obj, token: await getAuthToken()));
-      MenuItemResponseModel responseModel = MenuItemResponseModel();
-      responseModel.message = "Success";
-
-      return responseModel;
+      await baseApiService.post(endpoint: apiEndPoint, data: obj, token: await getAuthToken());
+      return MenuItemResponseModel();
     } catch (e) {
       throw UnimplementedError();
     }
@@ -35,8 +31,7 @@ class MenuItemService extends BaseService<MenuItemResponseModel> {
   @override
   Future<MenuItemResponseModel> deleteData(Object obj) async {
     try {
-      await baseApiService.delete(
-          endpoint: apiEndPoint, data: obj, token: await getAuthToken());
+      await baseApiService.delete(endpoint: apiEndPoint, data: obj, token: await getAuthToken());
       return MenuItemResponseModel();
     } catch (e) {
       print(e);

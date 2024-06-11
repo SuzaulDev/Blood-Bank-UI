@@ -4,6 +4,7 @@ import 'package:blood_bank_app/ui/customView/general_user_view/my_blood_request_
 import 'package:blood_bank_app/ui/customView/general_user_view/send_blood_request_screen.dart';
 import 'package:blood_bank_app/ui/customView/volunteer_view/add_donor.dart';
 import 'package:blood_bank_app/ui/customView/volunteer_view/processing_blood_request.dart';
+import 'package:blood_bank_app/ui/pages/about_us_page.dart';
 import 'package:blood_bank_app/utils/helper_funtion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,7 @@ AppBar customAppBar(double screenWidth) {
     backgroundColor: AppColors.redColor,
     centerTitle: true,
     title: const Text(
-      'Central Blood Bank',
+      'Red Love',
       style:
           TextStyle(color: AppColors.whiteColor, fontWeight: FontWeight.bold),
     ),
@@ -89,14 +90,19 @@ Widget customBody(double screenWidth) {
   return BlocBuilder<HomePageBloc, HomePageState>(
     builder: (context, state) {
       if (state is HomePageLoading) {
-        return const Center(
-          child: CircularProgressIndicator(),
+        return  Center(
+          child: Image.asset(
+            'images/blood_animated.gif',
+            fit: BoxFit.cover,
+          ),
         );
       }
       if (state is HomePageLoaded) {
         //TODO: return dashbordview or user list into the condition bloc
         if (state.userTypeId == 0) {
-          return Container();
+          return Container(
+            child: Text("Admin Dashboard",style: TextStyle(fontSize: 24),),
+          );
         }
         return  UserDashBoard(
           screenWidth: screenWidth,
@@ -139,6 +145,9 @@ Widget customBody(double screenWidth) {
       if(state is FeedPage){
         return const Center(child: Text("This Page is Under Constraction"));
       }
+      if(state is About){
+        return  AboutPage();
+      }
       if(state is NearByDonor){
         return NearByDonorScreen();
       }
@@ -155,7 +164,6 @@ Widget customBody(double screenWidth) {
       }
       if(state is ViewBloodRequest){
         return ViewBloodRequestScreen(bloodRequestList: state.bloodRequestList);
-
       }
       if(state is MyBloodRequest){
         //print(state.baseResponseModel.data);
